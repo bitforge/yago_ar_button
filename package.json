@@ -1,0 +1,42 @@
+{
+  "name": "genie-ar-button",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "lint": "vue-cli-service lint",
+    "build:dev": "vue-cli-service build --mode staging --target wc --name ar-button src/components/ar-button.vue --report",
+    "build:prod": "vue-cli-service build --target wc --name ar-button src/components/ar-button.vue --report",
+    "deploy:prod": "gsutil cp dist/ar-button*.min.js gs://genie-dist/ar-button/",
+    "deploy:dev": "gsutil -h \"Cache-Control: no-store\" cp dist/ar-button*.min.js gs://genie-dist-dev/ar-button/"
+  },
+  "dependencies": {
+    "qr-code-styling": "1.5.0",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^8.4.2"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.3.5",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.2.1",
+    "typescript": "~3.9.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.4.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "supports es6",
+    "not dead"
+  ]
+}

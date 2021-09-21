@@ -1,0 +1,133 @@
+<template>
+    <transition name="modal-fade">
+        <div class="modal-background" @click="close" v-bind:class="{message: message}">
+            <div class="modal" role="dialog" v-on:click.stop>
+                <header class="modal-header">
+                    <slot name="header"></slot>
+                    <button type="button" class="button-close" @click="close">✕</button>
+                </header>
+                <section class="modal-body">
+                    <slot></slot>
+                </section>
+                <footer>
+                    <p>
+                        Powered by
+                        <a href="https://ar-webshop.com/">Genie AR</a>
+                        <img src="@/assets/genie_icon.png" />
+                    </p>
+                </footer>
+            </div>
+        </div>
+    </transition>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component
+export default class ModalWindow extends Vue {
+
+    @Prop({ default: false })
+    private message!: boolean;
+
+    private close() {
+        this.$emit('close');
+    }
+}
+</script>
+
+<style scoped>
+.modal-fade-enter,
+.modal-fade-leave-active {
+    opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.modal-background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    background: #ffffff;
+    box-shadow: 1px 1px 20px 1px #838383;
+    overflow-x: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+}
+
+.button-close {
+    border: none;
+    font-size: 38px;
+    cursor: pointer;
+    color: #a99fa4;
+    background: transparent;
+}
+
+.button-close:focus {
+    outline: none;
+}
+
+.modal-body {
+    position: relative;
+    margin: 20px 60px;
+}
+
+footer {
+    border-top: 1px solid #888888;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+    footer {
+        border-top: 0.5px solid #888888;
+    }
+}
+
+footer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+footer img {
+    position: relative;
+    top: 2px;
+    margin: 0 4px;
+    height: 16px;
+}
+
+.message .button-close {
+    display: none;
+}
+
+.message header {
+    padding: 0 15px;
+}
+
+.message section {
+    margin: 0;
+}
+
+</style>
