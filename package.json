@@ -1,6 +1,6 @@
 {
   "name": "@bitforgehq/genie-ar-button",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "main": "dist/ar-button.min.js",
   "unpkg": "dist/ar-button.min.js",
