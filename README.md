@@ -1,8 +1,8 @@
 # Genie AR Button
 
-WebComponent to directly launch the AR view of Genie AR models.
+WebComponent to directly launch AR view on supported devices or show a QR Code overlay dialog.
 
-More Details on Genie AR here: https://ar-webshop.com/
+More details and examples here: https://ar-webshop.com/
 
 ##  Installation
 
@@ -27,7 +27,7 @@ import '@bitforgehq/genie-ar-button';
 Add these two javascript files at the end of your document or in your `<head>`:
 
 ```html
-<script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+<script src="https://unpkg.com/vue@2/dist/vue.min.js"></script>
 <script type="module" src="https://dist.genie-ar.ch/ar-button/ar-button.min.js"></script>
 ```
 ## Usage
@@ -74,7 +74,7 @@ ar-button {
 If you want to style further details, you need to customize the code and deploy Genie Button yourself.
 
 
-# Develop
+# Development
 
 To start hacking:
 
@@ -82,3 +82,5 @@ To start hacking:
 yarn install
 yarn serve
 ```
+
+Issues and pull requests are highly welcome!
