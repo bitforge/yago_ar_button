@@ -1,5 +1,5 @@
 <template>
-    <modal-window :message="true" @close="close">
+    <modal-window :message="true" @close="close" class="ar-button-browser-unsupported">
         <template v-slot:header>
             <div class="notsupported-modal-header">
 
@@ -95,11 +95,11 @@ export default class BrowserUnsupported extends Vue {
 </script>
 
 <style scoped>
-.notsupported-modal-header {
+.ar-button-browser-unsupported .notsupported-modal-header {
     position: relative;
 }
 
-.copy-container {
+.ar-button-browser-unsupported .copy-container {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -109,12 +109,12 @@ export default class BrowserUnsupported extends Vue {
     padding: 0 24px 24px 24px;
 }
 
-.content {
+.ar-button-browser-unsupported .content {
     padding: 0 24px;
     text-align: center;
 }
 
-.model-url {
+.ar-button-browser-unsupported .model-url {
     padding: 4px 8px;
     background: transparent;
     border-radius: 4px 0 0 4px;
@@ -126,7 +126,7 @@ export default class BrowserUnsupported extends Vue {
     margin: 0;
 }
 
-.copy-to-clipboard {
+.ar-button-browser-unsupported .copy-to-clipboard {
     border-radius: 0 4px 4px 0;
     border: 1px solid #999;
     border-left: 0;
@@ -138,17 +138,17 @@ export default class BrowserUnsupported extends Vue {
     transition: background-color 0.2s ease-in;
 }
 
-.copy-to-clipboard.copied {
+.ar-button-browser-unsupported .copy-to-clipboard.copied {
     background-color: #4caf50;
 }
 
-.modal-header h2 {
+.ar-button-browser-unsupported .modal-header h2 {
     margin: 0;
     padding: 45px 10px 20px 15px;
     text-align: center;
 }
 
-.button-close {
+.ar-button-browser-unsupported .button-close {
     border: none;
     background: none;
     position: absolute;
@@ -159,7 +159,7 @@ export default class BrowserUnsupported extends Vue {
 
 
 
-.clipboard-tooltip  {
+.ar-button-browser-unsupported .clipboard-tooltip  {
   visibility: visible;
   width: 120px;
   background-color: #555;
@@ -177,7 +177,7 @@ export default class BrowserUnsupported extends Vue {
   font-size: 12px;
 }
 
-.clipboard-tooltip ::after {
+.ar-button-browser-unsupported .clipboard-tooltip ::after {
   content: "";
   position: absolute;
   top: -10px;
@@ -188,7 +188,7 @@ export default class BrowserUnsupported extends Vue {
   border-color:  transparent transparent #555 transparent;
 }
 
-.copy-container:hover .clipboard-tooltip  {
+.ar-button-browser-unsupported .copy-container:hover .clipboard-tooltip  {
     visibility: hidden;
     opacity: 0;
 }
