@@ -11,9 +11,9 @@ More details and examples here: https://ar-webshop.com/
 Use your favorite package manager:
 
 ```shell
-npm install genie-ar-button
+npm install @bitforgehq/genie-ar-button
 # OR:
-yarn add genie-ar-button
+yarn add @bitforgehq/genie-ar-button
 ```
 
 Link the source in your script:

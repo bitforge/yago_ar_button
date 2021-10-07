@@ -1,6 +1,6 @@
 {
   "name": "@bitforgehq/genie-ar-button",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "main": "dist/ar-button.min.js",
   "unpkg": "dist/ar-button.min.js",
@@ -8,8 +8,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "build:dev": "vue-cli-service build --mode staging --target wc --name ar-button src/components/ar-button.vue --report",
-    "build:prod": "vue-cli-service build --target wc --name ar-button src/components/ar-button.vue --report",
+
+    "build:dev": "yarn build:dev:wc & yarn build:dev:lib",
+    "build:dev:lib": "vue-cli-service build --mode staging --target lib --name ar-button src/components/ar-button.vue",
+    "build:dev:wc": "vue-cli-service build --mode staging --target wc --name ar-button src/components/ar-button.vue",
+
+    "build:prod": "yarn build:prod:wc & yarn build:prod:lib",
+    "build:prod:lib": "vue-cli-service build --target lib --name ar-button src/components/ar-button.vue",
+    "build:prod:wc": "vue-cli-service build --target wc --name ar-button src/components/ar-button.vue",
+
     "deploy:prod": "gsutil cp dist/ar-button*.min.js gs://genie-dist/ar-button/",
     "deploy:dev": "gsutil -h \"Cache-Control: no-store\" cp dist/ar-button*.min.js gs://genie-dist-dev/ar-button/"
   },
