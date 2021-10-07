@@ -2,8 +2,7 @@
   "name": "@bitforgehq/genie-ar-button",
   "version": "1.0.4",
   "private": false,
-  "main": "dist/ar-button.min.js",
-  "unpkg": "dist/ar-button.min.js",
+  "main": "dist/ar-button.umd.min.js",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
