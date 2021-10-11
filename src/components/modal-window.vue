@@ -1,6 +1,6 @@
 <template>
     <transition name="modal-fade">
-        <div class="modal-background ar-button-modal" @click="close" v-bind:class="{message: message}">
+        <div class="modal-background" @click="close" v-bind:class="{message: message}">
             <div class="modal" role="dialog" v-on:click.stop>
                 <header class="modal-header">
                     <slot name="header"></slot>
@@ -47,7 +47,7 @@ export default class ModalWindow extends Vue {
     transition: opacity 0.2s ease;
 }
 
-.ar-button-modal.modal-background {
+.modal-background {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -61,7 +61,7 @@ export default class ModalWindow extends Vue {
     padding: 10px;
 }
 
-.ar-button-modal .modal {
+.modal {
     display: flex;
     flex-direction: column;
     border-radius: 1em;
@@ -70,13 +70,13 @@ export default class ModalWindow extends Vue {
     overflow-x: auto;
 }
 
-.ar-button-modal .modal-header {
+.modal-header {
     display: flex;
     justify-content: flex-end;
     padding: 15px;
 }
 
-.ar-button-modal .button-close {
+.button-close {
     border: none;
     font-size: 38px;
     cursor: pointer;
@@ -84,11 +84,11 @@ export default class ModalWindow extends Vue {
     background: transparent;
 }
 
-.ar-button-modal .button-close:focus {
+.button-close:focus {
     outline: none;
 }
 
-.ar-button-modal .modal-body {
+.modal-body {
     position: relative;
     margin: 20px 60px;
 }
@@ -101,32 +101,32 @@ footer {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2) {
-    .ar-button-modal footer {
+    footer {
         border-top: 0.5px solid #888888;
     }
 }
 
-.ar-button-modal footer a {
+footer a {
     color: inherit;
     text-decoration: none;
 }
 
-.ar-button-modal footer img {
+footer img {
     position: relative;
     top: 2px;
     margin: 0 4px;
     height: 16px;
 }
 
-.ar-button-modal .message .button-close {
+.message .button-close {
     display: none;
 }
 
-.ar-button-modal .message header {
+.message header {
     padding: 0 15px;
 }
 
-.ar-button-modal .message section {
+.message section {
     margin: 0;
 }
 
