@@ -28,7 +28,7 @@ Add these two javascript files at the end of your document or in your `<head>`:
 
 ```html
 <script src="https://unpkg.com/vue@2/dist/vue.min.js"></script>
-<script type="module" src="https://dist.genie-ar.ch/ar-button/ar-button.min.js"></script>
+<script type="module" src="https://unpkg.com/@bitforgehq/genie-ar-button/dist/ar-button.min.js"></script>
 ```
 ## Usage
 
@@ -37,10 +37,10 @@ Include the WebComponent in your Website where the button should appear.
 ```html
 <ar-button
     model="<genie-slug>"
-    text="Place"
+    text="Place in your space"
     qr-size="300"
-    qr-title="This is the Title"
-    qr-text="And this is the Text of your QR code!">
+    qr-title="Here we go!"
+    qr-text="Scan the QR Code with your smartphone to place the model in your space.">
 </ar-button>
 ```
 
