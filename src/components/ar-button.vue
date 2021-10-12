@@ -1,14 +1,15 @@
 <template>
     <div :id="elementId" class="ar-button">
         <a ref="ar" rel="ar" :href="modelLink" @click="startAR">
-            <img />
             <!-- image tag as first child is required for iOS -->
+            <img />
             <ar-icon />
             {{ text }}
         </a>
-        <modal-window v-show="showQrCode" @close="showQrCode = false">
-            <div class="qr-element" ref="qrcode">
-            </div>
+        <modal-window
+            v-show="showQrCode"
+            @close="showQrCode = false">
+            <div class="qr-element" ref="qrcode"></div>
             <h2 class="modal-content">{{ qrTitle }}</h2>
             <p class="modal-content" :style="{ 'width': qrSize + 'px' }">
                 {{ qrText }}

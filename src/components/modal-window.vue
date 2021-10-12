@@ -1,6 +1,6 @@
 <template>
     <transition name="modal-fade">
-        <div class="modal-background" @click="close" v-bind:class="{message: message}">
+        <div class="ar-button-modal" v-bind:class="[modalClass]">
             <div class="modal" role="dialog" v-on:click.stop>
                 <header class="modal-header">
                     <slot name="header"></slot>
@@ -27,8 +27,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class ModalWindow extends Vue {
 
-    @Prop({ default: false })
-    private message!: boolean;
+    @Prop({ default: '' })
+    private modalClass!: string;
 
     private close() {
         this.$emit('close');
@@ -47,7 +47,7 @@ export default class ModalWindow extends Vue {
     transition: opacity 0.2s ease;
 }
 
-.modal-background {
+.ar-button-modal {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -61,7 +61,7 @@ export default class ModalWindow extends Vue {
     padding: 10px;
 }
 
-.modal {
+.ar-button-modal .modal {
     display: flex;
     flex-direction: column;
     border-radius: 1em;
@@ -70,13 +70,13 @@ export default class ModalWindow extends Vue {
     overflow-x: auto;
 }
 
-.modal-header {
+.ar-button-modal .modal-header {
     display: flex;
     justify-content: flex-end;
     padding: 15px;
 }
 
-.button-close {
+.ar-button-modal .button-close {
     border: none;
     font-size: 38px;
     cursor: pointer;
@@ -84,16 +84,16 @@ export default class ModalWindow extends Vue {
     background: transparent;
 }
 
-.button-close:focus {
+.ar-button-modal .button-close:focus {
     outline: none;
 }
 
-.modal-body {
+.ar-button-modal .modal-body {
     position: relative;
     margin: 20px 60px;
 }
 
-footer {
+.ar-button-modal footer {
     border-top: 1px solid #888888;
     display: inline-flex;
     flex-direction: column;
@@ -101,33 +101,20 @@ footer {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2) {
-    footer {
+    .ar-button-modal footer {
         border-top: 0.5px solid #888888;
     }
 }
 
-footer a {
+.ar-button-modal footer a {
     color: inherit;
     text-decoration: none;
 }
 
-footer img {
+.ar-button-modal footer img {
     position: relative;
     top: 2px;
     margin: 0 4px;
     height: 16px;
 }
-
-.message .button-close {
-    display: none;
-}
-
-.message header {
-    padding: 0 15px;
-}
-
-.message section {
-    margin: 0;
-}
-
 </style>
