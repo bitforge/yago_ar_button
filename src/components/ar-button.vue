@@ -295,6 +295,9 @@ export default class ARButton extends Vue {
 }
 
 .qr-element {
+    display: flex;
+    justify-content: center;
+    align-content: center;
     padding: 12px;
     background: var(
         --qr-code-border-color,
