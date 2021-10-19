@@ -1,6 +1,6 @@
 <template>
     <div :id="elementId" class="ar-button">
-        <a ref="ar" rel="ar" :href="modelLink" @click="startAR">
+        <a ref="ar" rel="ar" :href="modelLink" @click="startAR" class="ar-link external">
             <!-- image tag as first child is required for iOS -->
             <img />
             <ar-icon />
@@ -264,7 +264,7 @@ export default class ARButton extends Vue {
     font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
 }
 
-.ar-button > a {
+.ar-button > .ar-link {
     background-color: var(--background-color, #074e68);
     color: var(--color, #ffffff);
     text-decoration: var(--text-decoration, none);

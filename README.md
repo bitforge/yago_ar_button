@@ -2,7 +2,7 @@
 
 WebComponent to directly launch AR view on supported devices or show a QR Code overlay dialog.
 
-More details and examples here: https://ar-webshop.com/
+More details and examples on https://ar-webshop.com/
 
 ##  Installation
 
