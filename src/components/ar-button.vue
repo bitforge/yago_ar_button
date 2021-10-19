@@ -93,8 +93,6 @@ export default class ARButton extends Vue {
     }
 
     public async mounted() {
-
-
         // On iOS: Change model link to open USDZ with AR Quicklook directly (Genie Redirect to USDZ model)
         if (this.isIos() && this.isQuicklookSupported()) {
             this.isArSupported = true;
@@ -165,14 +163,12 @@ export default class ARButton extends Vue {
     }
 
     private isQuicklookSupported(): boolean {
-        // https://webkit.org/blog/8421/viewing-augmented-reality-assets-in-safari-for-ios/
         const link = this.$refs.ar as HTMLAnchorElement;
         if (link) return link.relList.supports('ar');
         return false;
     }
 
     private isWKWebView(): boolean {
-        // https://stackoverflow.com/questions/28795476/detect-if-page-is-loaded-inside-wkwebview-in-javascript
         const _window = window as any;
         return _window.webkit && _window.webkit.messageHandlers;
     }
@@ -180,9 +176,9 @@ export default class ARButton extends Vue {
     private checkIosBrowserSupport(): boolean {
         // On iOS, some WKWebView based browsers like Chrome and Firefox do support Quicklook links,
         // while others like Brave, Opera or DuckDuckGo do not. They either offer to download the
-        // USDZ File or worse, show it's plain content. It's hard to detect unsupported browsers
+        // USDZ File or, worse, show it's plain content. It's hard to detect unsupported browsers
         // since it can also be an embedded WebView in an App (e.g. LinkedIn In-App Browser).
-        // Therefore, if WKWebView is detected, we only allow browsers known to work.
+        // Therefore, if WKWebView is detected, we only allow browsers with known Quicklook support.
 
         if (this.isWKWebView()) {
             // https://chromium.googlesource.com/chromium/src/+/HEAD/docs/ios/user_agent.md
@@ -198,7 +194,7 @@ export default class ARButton extends Vue {
             return isChrome || isFirefox || isEdge;
         }
 
-        // Allow other browsers are explictly not checked!
+        // All other browsers like Safari, SFSafariViewController and others are feature detected
         return true;
     }
 
@@ -227,8 +223,6 @@ export default class ARButton extends Vue {
     }
 
     private async renderQrCode(url: URL) {
-        // Nice idea, but fails to load chunks
-        //const qrcode = await import('qrcode'/* webpackChunkName: "qrcode" */);
         this.qrOptions['data'] = url.toString();
         this.qrCode?.update(this.qrOptions);
     }
@@ -245,6 +239,7 @@ export default class ARButton extends Vue {
     }
 
     private modelIdInFragment(): boolean {
+        // Check if url contains this <ar-button> id
         if (window.location.hash && window.location.hash.startsWith('#')) {
             const fragment = window.location.hash.substr(1);
             return fragment === this.elementId || fragment.includes('ar-button=' + this.elementId);
