@@ -94,7 +94,7 @@ export default class BrowserUnsupported extends Vue {
 }
 </script>
 
-<style scoped>
+<style>
 .ar-button-browser-unsupported .button-close {
     display: none;
 }

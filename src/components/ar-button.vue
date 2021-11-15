@@ -258,7 +258,7 @@ export default class ARButton extends Vue {
 }
 </script>
 
-<style scoped>
+<style>
 .ar-button {
     display: inline-block;
     font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);

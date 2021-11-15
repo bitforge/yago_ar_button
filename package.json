@@ -1,6 +1,6 @@
 {
   "name": "@bitforgehq/genie-ar-button",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "private": false,
   "main": "dist/ar-button.umd.min.js",
   "license": "MIT",
@@ -9,13 +9,13 @@
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
 
-    "build": "yarn build:wc & yarn build:lib",
-    "build:lib": "vue-cli-service build --target lib --name ar-button src/components/ar-button.vue",
-    "build:wc": "vue-cli-service build --target wc --name ar-button src/components/ar-button.vue",
+    "build": "rm -rf dist && yarn build:lib && yarn build:wc",
+    "build:lib": "vue-cli-service build --no-clean --target lib --name ar-button src/components/ar-button.vue",
+    "build:wc": "vue-cli-service build --no-clean --target wc --name ar-button src/components/ar-button.vue",
 
-    "build:dev": "yarn build:dev:wc & yarn build:dev:lib",
-    "build:dev:lib": "vue-cli-service build --mode staging --target lib --name ar-button src/components/ar-button.vue",
-    "build:dev:wc": "vue-cli-service build --mode staging --target wc --name ar-button src/components/ar-button.vue",
+    "build:dev": "rm -rf dist && yarn build:dev:lib && yarn build:dev:wc",
+    "build:dev:lib": "vue-cli-service build --no-clean --mode staging --target lib --name ar-button src/components/ar-button.vue",
+    "build:dev:wc": "vue-cli-service build --no-clean --mode staging --target wc --name ar-button src/components/ar-button.vue",
     
     "deploy:dev": "gsutil -h \"Cache-Control: no-store\" cp dist/ar-button*.min.js gs://genie-dist-dev/ar-button/"
   },

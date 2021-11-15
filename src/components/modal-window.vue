@@ -36,7 +36,7 @@ export default class ModalWindow extends Vue {
 }
 </script>
 
-<style scoped>
+<style>
 .modal-fade-enter,
 .modal-fade-leave-active {
     opacity: 0;
