@@ -154,7 +154,7 @@ export default class BrowserUnsupported extends Vue {
     background-color: #4caf50;
 }
 
-.ar-button-browser-unsupported .modal-header h2 {
+.ar-button-browser-unsupported .ar-modal-header h2 {
     margin: 0;
     padding: 45px 10px 20px 15px;
     text-align: center;

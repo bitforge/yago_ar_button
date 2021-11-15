@@ -10,8 +10,8 @@
             v-show="showQrCode"
             @close="showQrCode = false">
             <div class="qr-element" ref="qrcode"></div>
-            <h2 class="modal-content">{{ qrTitle }}</h2>
-            <p class="modal-content" :style="{ 'width': qrSize + 'px' }">
+            <h2 class="ar-modal-content">{{ qrTitle }}</h2>
+            <p class="ar-modal-content" :style="{ 'width': qrSize + 'px' }">
                 {{ qrText }}
             </p>
         </modal-window>
@@ -258,7 +258,7 @@ export default class ARButton extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 .ar-button {
     display: inline-block;
     font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
@@ -309,12 +309,27 @@ export default class ARButton extends Vue {
     display: block
 }
 
-.modal-header h2 {
+.ar-modal-header h2 {
     margin: 0;
     padding: 15px 10px 10px 10px;
 }
 
-.modal-content {
-    text-align: left;
+.ar-modal-content {
+    color: #000000;
+    text-align: left;    
+}
+
+h2.ar-modal-content {
+    font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+    font-size: 24px;
+    margin: 0;
+    padding: 20px 0;
+}
+
+p.ar-modal-content {
+    font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+    font-size: 16px;
+    margin: 0;
+    padding: 0 0 16px 0;
 }
 </style>
