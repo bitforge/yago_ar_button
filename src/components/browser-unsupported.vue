@@ -82,20 +82,20 @@ const messages: Messages = {
 })
 export default class BrowserUnsupported extends Vue {
     @Prop()
-    private modelLink!: string;
+    public modelLink!: string;
 
-    private urlCopied = false;
-    private locale = 'en';
+    public urlCopied = false;
+    public locale = 'en';
 
-    private mounted(): void {
+    public mounted(): void {
         this.initLocale();
     }
 
-    private close() {
+    public close() {
         this.$emit('close');
     }
 
-    private initLocale() {
+    public initLocale() {
         const browserLang = navigator.language.substring(0, 2);
         const supportedLanguages = Object.keys(messages);
         if (supportedLanguages.includes(browserLang)) {
@@ -103,11 +103,11 @@ export default class BrowserUnsupported extends Vue {
         }
     }
 
-    private _(key: string): string {
+    public _(key: string): string {
         return messages[this.locale][key] || key;
     }
 
-    private async copyUrl() {
+    public async copyUrl() {
         try {
             this.urlCopied = true;
             await navigator.clipboard.writeText(this.modelLink.toString());
