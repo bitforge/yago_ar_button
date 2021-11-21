@@ -6,19 +6,14 @@
             <ar-icon />
             {{ text }}
         </a>
-        <modal-window
-            v-show="showQrCode"
-            @close="showQrCode = false">
+        <modal-window v-show="showQrCode" @close="showQrCode = false">
             <div class="qr-element" ref="qrcode"></div>
             <h2 class="ar-modal-content">{{ qrTitle }}</h2>
-            <p class="ar-modal-content" :style="{ 'width': qrSize + 'px' }">
+            <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
                 {{ qrText }}
             </p>
         </modal-window>
-        <browser-unsupported
-            :modelLink="modelLink"
-            v-show="showBrowserHint"
-            @close="showBrowserHint = false" />
+        <browser-unsupported :modelLink="modelLink" v-show="showBrowserHint" @close="showBrowserHint = false" />
     </div>
 </template>
 
@@ -27,10 +22,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import ARIcon from './ar-icon.vue';
 import modal from './modal-window.vue';
 import BrowserUnsupported from './browser-unsupported.vue';
-import QRCodeStyling, {DrawType} from 'qr-code-styling';
+import QRCodeStyling, { DrawType } from 'qr-code-styling';
 
 declare global {
-    interface Window { MSStream: any }
+    interface Window {
+        MSStream: any;
+    }
 }
 
 interface Config {
@@ -81,13 +78,13 @@ export default class ARButton extends Vue {
         margin: 10,
         errorCorrectionLevel: 'Q',
         image: undefined,
-    }
+    };
 
     public config: Config = {
-        'site_url': null,
-        'quicklook_link': null,
-        'qr_config': null,
-    }
+        site_url: null,
+        quicklook_link: null,
+        qr_config: null,
+    };
 
     public get elementId() {
         return 'ar-button-' + this.model;
@@ -126,7 +123,7 @@ export default class ARButton extends Vue {
 
         // Initialize QR code drawing style
         if ('qr_config' in this.config) {
-            Object.assign(this.qrOptions, this.config.qr_config)
+            Object.assign(this.qrOptions, this.config.qr_config);
             // Use higher error correction level when QR Code has image
             if ('image' in this.qrOptions && this.qrOptions['image']) {
                 this.qrOptions['errorCorrectionLevel'] = 'H';
@@ -137,11 +134,11 @@ export default class ARButton extends Vue {
     }
 
     public onCallToActionButtonTapped(event: Event): void {
-        if ((event as any).data == "_apple_ar_quicklook_button_tapped") {
+        if ((event as any).data == '_apple_ar_quicklook_button_tapped') {
             if (this.config.site_url) {
-                window.location.assign('')
+                window.location.assign('');
             } else {
-                console.error('Model site_url must be defined when using callToAction.')
+                console.error('Model site_url must be defined when using callToAction.');
             }
         }
     }
@@ -154,16 +151,13 @@ export default class ARButton extends Vue {
         }
         const encodedUrl = encodeURIComponent(pageUrl.toString());
 
-        return new URL(
-            `/v/${this.model}/sceneviewer?page_url=${encodedUrl}`,
-            this.baseUrl
-        );
+        return new URL(`/v/${this.model}/sceneviewer?page_url=${encodedUrl}`, this.baseUrl);
     }
 
     private isIos(): boolean {
         return (
             (/iPad|iPod|iPhone/.test(navigator.platform) ||
-            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
             !window.MSStream
         );
     }
@@ -306,17 +300,12 @@ export default class ARButton extends Vue {
     padding: 12px;
     background: var(
         --qr-code-border-color,
-        linear-gradient(
-            90deg,
-            rgba(245, 135, 85, 1) 0%,
-            rgba(255, 193, 160, 1) 43%,
-            rgba(195, 218, 224, 1) 68%
-        )
+        linear-gradient(90deg, rgba(245, 135, 85, 1) 0%, rgba(255, 193, 160, 1) 43%, rgba(195, 218, 224, 1) 68%)
     );
 }
 
 .qr-element img {
-    display: block
+    display: block;
 }
 
 .ar-modal-header h2 {

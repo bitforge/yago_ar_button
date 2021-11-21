@@ -8,6 +8,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
+    "prettify": "npx prettier --write src",
 
     "build": "rm -rf dist && yarn build:lib && yarn build:wc",
     "build:lib": "vue-cli-service build --no-clean --target lib --name ar-button src/components/ar-button.vue",
