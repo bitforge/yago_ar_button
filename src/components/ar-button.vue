@@ -29,7 +29,12 @@ import modal from './modal-window.vue';
 import BrowserUnsupported from './browser-unsupported.vue';
 import QRCodeStyling, {DrawType} from 'qr-code-styling';
 
+declare global {
+    interface Window { MSStream: any }
+}
+
 interface Config {
+    site_url: string | null | undefined;
     quicklook_link: string | null | undefined;
     qr_config: object | null | undefined;
 }
@@ -79,8 +84,9 @@ export default class ARButton extends Vue {
     }
 
     public config: Config = {
-        "quicklook_link": null,
-        "qr_config": null,
+        'site_url': null,
+        'quicklook_link': null,
+        'qr_config': null,
     }
 
     public get elementId() {
@@ -103,6 +109,8 @@ export default class ARButton extends Vue {
             if (this.isBrowserSupported) {
                 this.modelLink = new URL(this.config.quicklook_link);
             }
+            const link = this.$refs.ar as HTMLAnchorElement;
+            link.addEventListener('message', this.onCallToActionButtonTapped);
         }
 
         // On Android: Change link to open SceneViewer directly. Assume AR is supported, if not, a fallback page will be shown
@@ -116,6 +124,7 @@ export default class ARButton extends Vue {
             this.ensureButtonIsVisible();
         }
 
+        // Initialize QR code drawing style
         if ('qr_config' in this.config) {
             Object.assign(this.qrOptions, this.config.qr_config)
             // Use higher error correction level when QR Code has image
@@ -125,6 +134,16 @@ export default class ARButton extends Vue {
         }
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.$refs.qrcode as HTMLElement);
+    }
+
+    public onCallToActionButtonTapped(event: Event): void {
+        if ((event as any).data == "_apple_ar_quicklook_button_tapped") {
+            if (this.config.site_url) {
+                window.location.assign('')
+            } else {
+                console.error('Model site_url must be defined when using callToAction.')
+            }
+        }
     }
 
     private buildSceneviewerLink(): URL {
@@ -142,8 +161,6 @@ export default class ARButton extends Vue {
     }
 
     private isIos(): boolean {
-        // @ts-ingore:next-line
-        // tslint:disable-next-line
         return (
             (/iPad|iPod|iPhone/.test(navigator.platform) ||
             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
