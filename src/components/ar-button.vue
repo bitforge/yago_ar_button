@@ -31,6 +31,7 @@ import QRCodeStyling, {DrawType} from 'qr-code-styling';
 
 interface Config {
     scaleable: boolean;
+    quicklookLink: string | null | undefined;
     qrConfig: object | null | undefined;
 }
 
@@ -80,6 +81,7 @@ export default class ARButton extends Vue {
 
     private config: Config = {
         scaleable: false,
+        quicklookLink: null,
         qrConfig: null,
     }
 
@@ -93,12 +95,15 @@ export default class ARButton extends Vue {
     }
 
     public async mounted() {
+        // Fetch config from genie server and update when ready
+        this.config = await this.getConfig();
+
         // On iOS: Change model link to open USDZ with AR Quicklook directly (Genie Redirect to USDZ model)
-        if (this.isIos() && this.isQuicklookSupported()) {
+        if (this.isIos() && this.isQuicklookSupported() && this.config.quicklookLink) {
             this.isArSupported = true;
             this.isBrowserSupported = this.checkIosBrowserSupport();
             if (this.isBrowserSupported) {
-                this.modelLink = await this.buildQuicklookLink();
+                this.modelLink = new URL(this.config.quicklookLink);
             }
         }
 
@@ -113,9 +118,6 @@ export default class ARButton extends Vue {
             this.ensureButtonIsVisible();
         }
 
-        // Fetch config from genie server and update when ready
-        this.config = await this.getConfig();
-
         if ('qrConfig' in this.config) {
             Object.assign(this.qrOptions, this.config.qrConfig)
             // Use higher error correction level when QR Code has image
@@ -125,15 +127,6 @@ export default class ARButton extends Vue {
         }
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.$refs.qrcode as HTMLElement);
-    }
-
-    private async buildQuicklookLink(): Promise<URL> {
-        const scaleable = this.config.scaleable;
-
-        return new URL(
-            `/v/${this.model}/quicklook#allowsContentScaling=${scaleable}`,
-            this.baseUrl
-        );
     }
 
     private buildSceneviewerLink(): URL {
@@ -151,6 +144,8 @@ export default class ARButton extends Vue {
     }
 
     private isIos(): boolean {
+        // @ts-ingore:next-line
+        // tslint:disable-next-line
         return (
             (/iPad|iPod|iPhone/.test(navigator.platform) ||
             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
@@ -316,7 +311,7 @@ export default class ARButton extends Vue {
 
 .ar-modal-content {
     color: #000000;
-    text-align: left;    
+    text-align: left;
 }
 
 h2.ar-modal-content {

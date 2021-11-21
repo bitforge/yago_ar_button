@@ -1,6 +1,6 @@
 {
   "name": "@bitforgehq/genie-ar-button",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "private": false,
   "main": "dist/ar-button.umd.min.js",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "build:dev": "rm -rf dist && yarn build:dev:lib && yarn build:dev:wc",
     "build:dev:lib": "vue-cli-service build --no-clean --mode staging --target lib --name ar-button src/components/ar-button.vue",
     "build:dev:wc": "vue-cli-service build --no-clean --mode staging --target wc --name ar-button src/components/ar-button.vue",
-    
+
     "deploy:dev": "gsutil -h \"Cache-Control: no-store\" cp dist/ar-button*.min.js gs://genie-dist-dev/ar-button/"
   },
   "dependencies": {
