@@ -30,9 +30,8 @@ import BrowserUnsupported from './browser-unsupported.vue';
 import QRCodeStyling, {DrawType} from 'qr-code-styling';
 
 interface Config {
-    scaleable: boolean;
-    quicklookLink: string | null | undefined;
-    qrConfig: object | null | undefined;
+    quicklook_link: string | null | undefined;
+    qr_config: object | null | undefined;
 }
 
 @Component({
@@ -59,17 +58,17 @@ export default class ARButton extends Vue {
     @Prop({ default: 200 })
     private qrSize!: number;
 
-    private baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
-    private modelLink: URL;
+    public baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
+    public modelLink: URL;
 
-    private isArSupported = false;
-    private isBrowserSupported = true;
+    public isArSupported = false;
+    public isBrowserSupported = true;
 
-    private showQrCode = false;
-    private showBrowserHint = false;
+    public showQrCode = false;
+    public showBrowserHint = false;
 
-    private qrCode: QRCodeStyling | null = null;
-    private qrOptions = {
+    public qrCode: QRCodeStyling | null = null;
+    public qrOptions = {
         width: this.qrSize - 24,
         height: this.qrSize - 24,
         type: 'svg' as DrawType,
@@ -79,10 +78,9 @@ export default class ARButton extends Vue {
         image: undefined,
     }
 
-    private config: Config = {
-        scaleable: false,
-        quicklookLink: null,
-        qrConfig: null,
+    public config: Config = {
+        "quicklook_link": null,
+        "qr_config": null,
     }
 
     public get elementId() {
@@ -99,11 +97,11 @@ export default class ARButton extends Vue {
         this.config = await this.getConfig();
 
         // On iOS: Change model link to open USDZ with AR Quicklook directly (Genie Redirect to USDZ model)
-        if (this.isIos() && this.isQuicklookSupported() && this.config.quicklookLink) {
+        if (this.isIos() && this.isQuicklookSupported() && this.config.quicklook_link) {
             this.isArSupported = true;
             this.isBrowserSupported = this.checkIosBrowserSupport();
             if (this.isBrowserSupported) {
-                this.modelLink = new URL(this.config.quicklookLink);
+                this.modelLink = new URL(this.config.quicklook_link);
             }
         }
 
@@ -118,8 +116,8 @@ export default class ARButton extends Vue {
             this.ensureButtonIsVisible();
         }
 
-        if ('qrConfig' in this.config) {
-            Object.assign(this.qrOptions, this.config.qrConfig)
+        if ('qr_config' in this.config) {
+            Object.assign(this.qrOptions, this.config.qr_config)
             // Use higher error correction level when QR Code has image
             if ('image' in this.qrOptions && this.qrOptions['image']) {
                 this.qrOptions['errorCorrectionLevel'] = 'H';
@@ -193,7 +191,7 @@ export default class ARButton extends Vue {
         return true;
     }
 
-    private startAR(e: Event) {
+    public startAR(e: Event) {
         // Show error on unsupported browsers (iOS WKWebView based third party browsers)
         if (!this.isBrowserSupported) {
             e.preventDefault();
@@ -224,9 +222,9 @@ export default class ARButton extends Vue {
 
     private async getConfig(): Promise<Config> {
         try {
-            const infoResponse = await fetch(`${this.baseUrl}/v/${this.model}/config`);
-            if (!infoResponse.ok) throw infoResponse;
-            return await infoResponse.json();
+            const configResponse = await fetch(`${this.baseUrl}/api/models/${this.model}/embed/options/`);
+            if (!configResponse.ok) throw configResponse;
+            return await configResponse.json();
         } catch (e) {
             // Fallback to fixed scaling
             return this.config;
