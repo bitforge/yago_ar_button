@@ -1,6 +1,6 @@
 <template>
     <transition name="modal-fade">
-        <div class="ar-button-modal" v-bind:class="[modalClass]">
+        <div :class="[{ 'ar-button-modal': true }, modalClass]">
             <div class="modal-inner" role="dialog" v-on:click.stop>
                 <div class="ar-modal-header">
                     <slot name="header"></slot>
