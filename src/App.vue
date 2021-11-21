@@ -1,22 +1,22 @@
 <template>
-  <div id="app">
-    <h1>Genie AR Button</h1>
+    <div id="app">
+        <h1>Genie AR Button</h1>
 
-    <ar-button
-      :model="model"
-      text="Im Raum platzieren"
-      qr-size="400"
-      qr-title="Los geht's"
-      qr-text="QR Code mit dem Smartphone scannen, um das Produkt im Raum zu platzieren">
-    </ar-button>
+        <ar-button
+            :model="model"
+            text="Im Raum platzieren"
+            qr-size="400"
+            qr-title="Los geht's"
+            qr-text="QR Code mit dem Smartphone scannen, um das Produkt im Raum zu platzieren"
+        >
+        </ar-button>
 
-    <p><a href="#IloveAR<3">Anchor 1: Changes QR Code</a></p>
-    <p><a href="#Have_a_nice_day">Anchor 2: Another QR Code</a><p>
+        <p><a href="#IloveAR<3">Anchor 1: Changes QR Code</a></p>
+        <p><a href="#Have_a_nice_day">Anchor 2: Another QR Code</a></p>
+        <p></p>
 
-    <footer>
-      Made with ❤️ by <a href="https://www.bitforge.ch/">Bitforge</a>.
-    </footer>
-  </div>
+        <footer>Made with ❤️ by <a href="https://www.bitforge.ch/">Bitforge</a>.</footer>
+    </div>
 </template>
 
 <script lang="ts">
@@ -24,12 +24,10 @@ import { Component, Vue } from 'vue-property-decorator';
 import ARButton from './components/ar-button.vue';
 
 @Component({
-  components: {'ar-button': ARButton},
+    components: { 'ar-button': ARButton },
 })
 export default class App extends Vue {
-
-  private model = process.env.VUE_APP_GENIE_MODEL;
-
+    private model = process.env.VUE_APP_GENIE_MODEL;
 }
 </script>
 <style>
@@ -59,6 +57,6 @@ export default class App extends Vue {
 */
 
 #app > footer {
-  margin-top: 40px
+    margin-top: 40px;
 }
 </style>
