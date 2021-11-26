@@ -116,14 +116,10 @@ export default class ARButton extends Vue {
             this.modelLink = this.buildSceneviewerLink();
         }
 
-        // If the model id is part of the fragment, make sure AR button is visible by scrolling it into view
-        if (this.modelIdInFragment()) {
-            this.ensureButtonIsVisible();
-        }
-
         // Initialize QR code drawing style
         if ('qr_config' in this.config) {
             Object.assign(this.qrOptions, this.config.qr_config);
+
             // Use higher error correction level when QR Code has image
             if ('image' in this.qrOptions && this.qrOptions['image']) {
                 this.qrOptions['errorCorrectionLevel'] = 'H';
@@ -240,24 +236,6 @@ export default class ARButton extends Vue {
             // Fallback to fixed scaling
             return this.config;
         }
-    }
-
-    private modelIdInFragment(): boolean {
-        // Check if url contains this <ar-button> id
-        if (window.location.hash && window.location.hash.startsWith('#')) {
-            const fragment = window.location.hash.substr(1);
-            return fragment === this.elementId || fragment.includes('ar-button=' + this.elementId);
-        }
-        return false;
-    }
-
-    private ensureButtonIsVisible() {
-        // Keep model id in scope of closure. `this.` won't work in load event handler
-        const modelId = this.model;
-        window.addEventListener('load', () => {
-            const arButton = document.querySelector('ar-button[model="' + modelId + '"]');
-            arButton?.scrollIntoView({ block: 'center' });
-        });
     }
 }
 </script>
