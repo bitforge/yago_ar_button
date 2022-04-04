@@ -7,7 +7,7 @@
             {{ text }}
         </a>
         <modal-window v-show="showQrCode" @close="showQrCode = false">
-            <div class="qr-element" ref="qrcode"></div>
+            <div class="qr-element" :ref="qrId"></div>
             <h2 class="ar-modal-content">{{ qrTitle }}</h2>
             <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
                 {{ qrText }}
@@ -60,6 +60,9 @@ export default class ARButton extends Vue {
     @Prop({ default: 200 })
     private qrSize!: number;
 
+    @Prop({ default: 'svg' })
+    private qrDrawMode!: string;
+
     public baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
     public modelLink: URL;
 
@@ -73,7 +76,7 @@ export default class ARButton extends Vue {
     public qrOptions = {
         width: this.qrSize - 24,
         height: this.qrSize - 24,
-        type: 'svg' as DrawType,
+        type: (this.qrDrawMode ? this.qrDrawMode : 'svg') as DrawType,
         data: '',
         margin: 10,
         errorCorrectionLevel: 'Q',
@@ -90,9 +93,13 @@ export default class ARButton extends Vue {
         return 'ar-button-' + this.model;
     }
 
+    public get qrId() {
+        return 'qrcode-' + this.model;
+    }
+
     public constructor() {
         super();
-        this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
+        this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);        
     }
 
     public async mounted() {
@@ -126,7 +133,7 @@ export default class ARButton extends Vue {
             }
         }
         this.qrCode = new QRCodeStyling(this.qrOptions);
-        this.qrCode.append(this.$refs.qrcode as HTMLElement);
+        this.qrCode.append(this.$refs[this.qrId] as HTMLElement);
     }
 
     public onCallToActionButtonTapped(event: Event): void {
