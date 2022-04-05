@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1>Genie AR Button</h1>
+        <h1>Yago AR Button</h1>
 
         <ar-button
             :model="model"

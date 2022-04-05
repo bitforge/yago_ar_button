@@ -12,8 +12,8 @@
                 <div class="ar-modal-footer">
                     <p>
                         Powered by
-                        <a href="https://ar-webshop.com/">Genie AR</a>
-                        <img src="@/assets/genie_icon.png" />
+                        <a href="https://ar-webshop.com/">Yago</a>
+                        <img src="@/assets/yago_icon.svg" />
                     </p>
                 </div>
             </div>
@@ -128,5 +128,70 @@ export default class ModalWindow extends Vue {
     font-size: 16px;
     margin: 0;
     padding: 16px 0;
+}
+.ar-button {
+    display: inline-block;
+    font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+}
+
+.ar-button > .ar-link {
+    background-color: var(--background-color, #074e68);
+    color: var(--color, #ffffff);
+    text-decoration: var(--text-decoration, none);
+    border: var(--border, none);
+    border-radius: var(--border-radius, 8px);
+    padding: var(--padding, 8px 16px);
+    display: inline-flex;
+    align-items: center;
+}
+
+.ar-button .ar-icon {
+    width: var(--ar-icon-height, 30px);
+    height: var(--ar-icon-height, 30px);
+    margin-right: 4px;
+}
+
+.ar-button .ar-icon-path {
+    fill: var(--color, #ffffff);
+}
+
+.qr-canvas {
+    display: block;
+}
+
+.qr-element {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 12px;
+    background: var(--qr-code-border-color, #074e68);
+}
+
+.qr-element img {
+    display: block;
+}
+
+.ar-modal-header h2 {
+    margin: 0;
+    padding: 15px 10px 10px 10px;
+}
+
+.ar-modal-content {
+    color: #000000;
+    text-align: left;
+}
+
+h2.ar-modal-content {
+    font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+    font-size: 24px;
+    margin: 0;
+    padding: 20px 0;
+}
+
+p.ar-modal-content {
+    font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+    font-size: 16px;
+    margin: 0;
+    padding: 0 0 16px 0;
 }
 </style>

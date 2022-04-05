@@ -99,14 +99,14 @@ export default class ARButton extends Vue {
 
     public constructor() {
         super();
-        this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);        
+        this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
     }
 
     public async mounted() {
-        // Fetch config from genie server and update when ready
+        // Fetch config from yago server and update when ready
         this.config = await this.getConfig();
 
-        // On iOS: Change model link to open USDZ with AR Quicklook directly (Genie Redirect to USDZ model)
+        // On iOS: Change model link to open USDZ with AR Quicklook directly (Yago Redirect to USDZ model)
         if (this.isIos() && this.isQuicklookSupported() && this.config.quicklook_link) {
             this.isArSupported = true;
             this.isBrowserSupported = this.checkIosBrowserSupport();
@@ -283,10 +283,7 @@ export default class ARButton extends Vue {
     justify-content: center;
     align-content: center;
     padding: 12px;
-    background: var(
-        --qr-code-border-color,
-        linear-gradient(90deg, rgba(245, 135, 85, 1) 0%, rgba(255, 193, 160, 1) 43%, rgba(195, 218, 224, 1) 68%)
-    );
+    background: var(--qr-code-border-color, #074e68);
 }
 
 .qr-element img {

@@ -1,4 +1,4 @@
-# Genie AR Button
+# Yago AR Button
 
 WebComponent to directly launch AR view on supported devices or show a QR Code overlay dialog.
 
@@ -36,7 +36,7 @@ Include the WebComponent in your Website where the button should appear.
 
 ```html
 <ar-button
-    model="<genie-slug>"
+    model="<yago-slug>"
     text="Place in your space"
     qr-size="300"
     qr-title="Here we go!"
@@ -46,7 +46,7 @@ Include the WebComponent in your Website where the button should appear.
 
 Property               |Type   |Description
 -----------------------|-------|---------------------------------------------------------------
-model                  |string |The slug (Short-URL) of your genie model. Usually 8 characters.
+model                  |string |The slug (Short-URL) of your yago model. Usually 8 characters.
 text                   |string |Text in the AR Button. Default is 'Place in your space'.
 qr-size                |number |Size of the QR Code in the modal popup window.
 qr-title               |string |Title text in the modal popup window.
@@ -55,7 +55,7 @@ qr-text                |string |Call to action text in the modal popup window.
 
 # Styling
 
-You can style Genie AR button with global CSS variables:
+You can style Yago AR button with global CSS variables:
 
 ```css
 ar-button {
@@ -71,7 +71,7 @@ ar-button {
 }
 ```
 
-If you want to style further details, you need to customize the code and deploy Genie Button yourself.
+If you want to style further details, you need to customize the code and deploy Yago Button yourself.
 
 
 # Development
