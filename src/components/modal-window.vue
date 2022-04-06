@@ -13,7 +13,7 @@
                     <p>
                         Powered by
                         <a href="https://ar-webshop.com/">Yago</a>
-                        <img src="@/assets/yago_icon.svg" />
+                        <img src="@/assets/yago_icon.png" />
                     </p>
                 </div>
             </div>
