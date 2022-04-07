@@ -1,6 +1,6 @@
 {
   "name": "@bitforgehq/genie-ar-button",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "private": false,
   "main": "dist/ar-button.umd.min.js",
   "license": "MIT",
