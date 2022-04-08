@@ -12,8 +12,10 @@
                 <div class="ar-modal-footer">
                     <p>
                         Powered by
-                        <a href="https://ar-webshop.com/">Yago</a>
-                        <img src="@/assets/yago.png" />
+                        <a href="https://yago.cloud/">
+                            Yago
+                            <img src="https://yago.cloud/static/yago/img/yago_icon.png" />
+                        </a>
                     </p>
                 </div>
             </div>
