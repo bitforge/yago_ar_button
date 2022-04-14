@@ -11,15 +11,15 @@ More details and examples on https://yago.cloud/
 Use your favorite package manager:
 
 ```shell
-npm install @bitforgehq/genie-ar-button
+npm install @bitforgehq/yago-ar-button
 # OR:
-yarn add @bitforgehq/genie-ar-button
+yarn add @bitforgehq/yago-ar-button
 ```
 
 Link the source in your script:
 
 ```javascript
-import '@bitforgehq/genie-ar-button';
+import '@bitforgehq/yago-ar-button';
 ```
 
 ### Via CDN
@@ -28,7 +28,7 @@ Add these two javascript files at the end of your document or in your `<head>`:
 
 ```html
 <script src="https://unpkg.com/vue@2/dist/vue.min.js"></script>
-<script type="module" src="https://unpkg.com/@bitforgehq/genie-ar-button/dist/ar-button.min.js"></script>
+<script type="module" src="https://dist.yago.cloud/ar-button/ar-button.min.js"></script>
 ```
 ## Usage
 
