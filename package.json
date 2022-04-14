@@ -1,6 +1,6 @@
 {
-  "name": "@bitforgehq/genie-ar-button",
-  "version": "1.0.29",
+  "name": "@bitforgehq/yago-ar-button",
+  "version": "1.0.0",
   "private": false,
   "main": "dist/ar-button.umd.min.js",
   "license": "MIT",
