@@ -11,11 +11,14 @@
     "lint": "vue-cli-service lint",
     "prettify": "npx prettier --write src",
 
-    "build": "vue-cli-service build --mode staging --target wc --name ar-button src/components/ar-button.vue",
-    "deploy": "gsutil -m -h \"Cache-Control: no-store\" rsync -d -r dist/ gs://ar-button-dev/ar-button/",
+    "build": "yarn build:dev",
+    "deploy": "yarn deploy:dev",
+
+    "build:dev": "vue-cli-service build --mode staging --target wc --name ar-button src/components/ar-button.vue",
+    "deploy:dev": "gsutil -h \"Cache-Control: no-store, no-cache\" rsync -d -r -x .*html$ dist/ gs://ar-button-dev/ar-button/",
 
     "build:prod": "vue-cli-service build --target wc --name ar-button src/components/ar-button.vue",
-    "deploy:prod": "gsutil -m -h \"Cache-Control: max-age=600, must-revalidate\" rsync -d -r dist/ gs://ar-button/ar-button/",
+    "deploy:prod": "gsutil -h \"Cache-Control: max-age=3600, must-revalidate\" rsync -d -r -x .*html$ dist/ gs://ar-button/ar-button/",
 
     "build:npm": "vue-cli-service build --target lib --name ar-button src/components/ar-button.vue",
     "deploy:npm": "npm publish"
