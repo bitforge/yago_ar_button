@@ -1,6 +1,6 @@
 # Yago AR Button
 
-WebComponent to directly launch AR view on supported devices or show a modal dialog with a QR Code to start the experience.
+A simple WebComponent to launch AR experiences on supported platforms directly or show a QR code to switch to supported devices.  
 
 More details and examples on https://yago.cloud/
 
