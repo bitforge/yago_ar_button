@@ -187,7 +187,11 @@ export default class ARButton extends Vue {
         // since it can also be an embedded WebView in an App (e.g. LinkedIn In-App Browser).
         // Therefore, if WKWebView is detected, we only allow browsers with known Quicklook support.
 
+        // TODO: Since iOS 15.4.1, ALL WKWebView based browsers are broken
+        // Reenable this, when the bug in Chrome, Firefox etc is fixed
         if (this.isWKWebView()) {
+            return false;
+            /*
             // https://chromium.googlesource.com/chromium/src/+/HEAD/docs/ios/user_agent.md
             const isChrome = navigator.userAgent.includes('CriOS/');
 
@@ -199,6 +203,7 @@ export default class ARButton extends Vue {
 
             // Only allow whitelisted browsers
             return isChrome || isFirefox || isEdge;
+            */
         }
 
         // All other browsers like Safari, SFSafariViewController and others are feature detected
