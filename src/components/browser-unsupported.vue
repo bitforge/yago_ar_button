@@ -64,12 +64,12 @@ interface Messages {
 const messages: Messages = {
     en: {
         browser_unsupported_title: 'Oops! Looks like your browser doesn’t support AR content.',
-        browser_unsupported_body: 'Please open this link in Safari, Chrome or Firefox.',
+        browser_unsupported_body: 'Please open this link in Safari.',
         clipboard_tooltip: 'Click to copy link.',
     },
     de: {
         browser_unsupported_title: 'Ohje! Sieht aus, als würde dein Browser keine AR-Inhalte unterstützen.',
-        browser_unsupported_body: 'Bitte öffne diesen Link in Safari, Chrome oder Firefox.',
+        browser_unsupported_body: 'Bitte öffne diesen Link in Safari.',
         clipboard_tooltip: 'Klicke um den Link zu kopieren.',
     },
 };
