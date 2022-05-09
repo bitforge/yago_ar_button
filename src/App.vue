@@ -2,14 +2,18 @@
     <div id="app">
         <h1>Yago AR Button</h1>
 
+<!--
         <ar-button
             :model="model"
             text="Im Raum platzieren"
             qr-size="400"
             qr-title="Los geht's"
             qr-text="QR Code mit dem Smartphone scannen, um das Produkt im Raum zu platzieren"
-        >
-        </ar-button>
+        />-->
+
+        <br />
+        <br />
+        <ar-button projectColor="#ff0000" :model="model" />
 
         <p><a href="#IloveAR<3">Anchor 1: Changes QR Code</a></p>
         <p><a href="#Have_a_nice_day">Anchor 2: Another QR Code</a></p>
@@ -43,18 +47,16 @@ export default class App extends Vue {
 /* Example of AR button styling */
 /* In the real world, when using the WebComponent, these vars should be defined for `ar-button` instead of `:root` */
 
-/*
 :root {
-    --background-color: #01662A;
-    --color: #FFFFFF;
+    /* --background-color: #01662a;
+    --color: #ffffff;
     --padding: 6px 12px;
     --border: 4px solid #004400;
     --border-radius: 4px;
     --ar-icon-width: 40px;
     --ar-icon-height: 40px;
-    --qr-code-border-color: #01662A;
+    --qr-code-border-color: #01662a; */
 }
-*/
 
 #app > footer {
     margin-top: 40px;

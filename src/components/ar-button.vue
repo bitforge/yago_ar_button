@@ -4,13 +4,13 @@
             <!-- image tag as first child is required for iOS -->
             <img />
             <ar-icon />
-            {{ text }}
+            {{ templateText }}
         </a>
         <modal-window v-show="showQrCode" @close="showQrCode = false">
             <div class="qr-element" :ref="qrId"></div>
-            <h2 class="ar-modal-content">{{ qrTitle }}</h2>
+            <h2 class="ar-modal-content">{{ templateQrTitle }}</h2>
             <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
-                {{ qrText }}
+                {{ templateQrText }}
             </p>
         </modal-window>
         <browser-unsupported :modelLink="modelLink" v-show="showBrowserHint" @close="showBrowserHint = false" />
@@ -23,6 +23,7 @@ import ARIcon from './ar-icon.vue';
 import modal from './modal-window.vue';
 import BrowserUnsupported from './browser-unsupported.vue';
 import QRCodeStyling, { DrawType } from 'qr-code-styling';
+import { warn } from 'vue-class-component/lib/util';
 
 declare global {
     interface Window {
@@ -34,7 +35,15 @@ interface Config {
     site_url: string | null | undefined;
     quicklook_link: string | null | undefined;
     qr_config: object | null | undefined;
+    ar_button_config: object | null | undefined;
 }
+
+const DEFAULT_TEXT = 'Place in your space';
+const DEFAULT_QRTITLE = 'Here we go!';
+const DEFAULT_QRTEXT = 'Scan the QR Code to place the model in your space.';
+const DEFAULT_QRSIZE = 200;
+const DEFAULT_DRAWMODE = 'svg';
+const DEFAULT_PROJECTCOLOR = '#074e68';
 
 @Component({
     name: 'ar-button',
@@ -48,20 +57,27 @@ export default class ARButton extends Vue {
     @Prop()
     private model!: string;
 
-    @Prop({ default: 'Place in your space' })
+    @Prop({ default: DEFAULT_TEXT })
     private text!: string;
+    private templateText = '';
 
-    @Prop({ default: 'Here we go!' })
+    @Prop({ default: DEFAULT_QRTITLE })
     private qrTitle!: string;
+    private templateQrTitle = '';
 
-    @Prop({ default: 'Scan the QR Code to place the model in your space.' })
+    @Prop({ default: DEFAULT_QRTEXT })
     private qrText!: string;
+    private templateQrText = '';
 
-    @Prop({ default: 200 })
+    @Prop({ default: DEFAULT_QRSIZE })
     private qrSize!: number;
 
-    @Prop({ default: 'svg' })
+    @Prop({ default: DEFAULT_DRAWMODE })
     private qrDrawMode!: string;
+
+    @Prop({ default: DEFAULT_PROJECTCOLOR })
+    private projectColor!: string;
+    private templateProjectColor!: string;
 
     public baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
     public modelLink: URL;
@@ -87,6 +103,7 @@ export default class ARButton extends Vue {
         site_url: null,
         quicklook_link: null,
         qr_config: null,
+        ar_button_config: null,
     };
 
     public get elementId() {
@@ -105,6 +122,8 @@ export default class ARButton extends Vue {
     public async mounted() {
         // Fetch config from yago server and update when ready
         this.config = await this.getConfig();
+
+        this.checkDefaultVars();
 
         // On iOS: Change model link to open USDZ with AR Quicklook directly (Yago Redirect to USDZ model)
         if (this.isIos() && this.isQuicklookSupported() && this.config.quicklook_link) {
@@ -134,6 +153,68 @@ export default class ARButton extends Vue {
         }
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.$refs[this.qrId] as HTMLElement);
+    }
+
+    private checkDefaultVars(): void {
+        console.log('got config');
+        console.log(this.config);
+
+        if (this.config && this.config.ar_button_config) {
+            const arButtonConfig = this.config.ar_button_config;
+
+            let userLang = navigator.language;
+            userLang = userLang.split('-')[0];
+
+            const validLangs = ['en', 'de', 'fr', 'it'];
+            let chosenLang = '';
+
+            !validLangs.includes(userLang) ? (chosenLang = 'en') : (chosenLang = userLang);
+
+            if (this.text == DEFAULT_TEXT) {
+                this.templateText = (arButtonConfig as any).arButtonText[chosenLang];
+            } else {
+                this.templateText = this.text;
+            }
+
+            if (this.qrTitle == DEFAULT_QRTITLE) {
+                this.templateQrTitle = (arButtonConfig as any).buttonTitle[chosenLang];
+            } else {
+                this.templateQrTitle = this.qrTitle;
+            }
+
+            if (this.qrText == DEFAULT_QRTEXT) {
+                this.templateQrText = (arButtonConfig as any).popupText[chosenLang];
+            } else {
+                this.templateQrText = this.qrText;
+            }
+
+            console.log('whole css kabizzle');
+
+            const arButtonElement = document.getElementById(this.elementId);
+
+            if (arButtonElement) {
+                const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
+                const qrBorderColor = getComputedStyle(arButtonElement).getPropertyValue('--qr-code-border-color');
+
+                if (bgColor || qrBorderColor) {
+                    console.log('got the color from css vars');
+                    console.log('we do not have to write any vars in this case');
+
+                    this.templateProjectColor = bgColor;
+                } else {
+                    if (this.projectColor != DEFAULT_PROJECTCOLOR) {
+                        this.templateProjectColor = this.projectColor;
+                    } else {
+                        this.templateProjectColor = (arButtonConfig as any).projectColor;
+                    }
+
+                    arButtonElement.style.setProperty('--background-color', this.templateProjectColor);
+                    arButtonElement.style.setProperty('--qr-code-border-color', this.templateProjectColor);
+                }
+            } else {
+                console.warn('Ar Button element is null.');
+            }
+        }
     }
 
     public onCallToActionButtonTapped(event: Event): void {
