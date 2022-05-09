@@ -190,7 +190,10 @@ export default class ARButton extends Vue {
 
             console.log('whole css kabizzle');
 
-            const arButtonElement = document.getElementById(this.elementId);
+            //const arButtonElement = document.getElementById(this.elementId);
+            const arButtonElement = document.querySelector('[model="' + this.model + '"]');
+            console.log(arButtonElement);
+            
 
             if (arButtonElement) {
                 const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
@@ -208,8 +211,8 @@ export default class ARButton extends Vue {
                         this.templateProjectColor = (arButtonConfig as any).projectColor;
                     }
 
-                    arButtonElement.style.setProperty('--background-color', this.templateProjectColor);
-                    arButtonElement.style.setProperty('--qr-code-border-color', this.templateProjectColor);
+                    (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
+                    (arButtonElement as HTMLElement).style.setProperty('--qr-code-border-color', this.templateProjectColor);
                 }
             } else {
                 console.warn('Ar Button element is null.');
