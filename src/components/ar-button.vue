@@ -122,6 +122,7 @@ export default class ARButton extends Vue {
     public async mounted() {
         // Fetch config from yago server and update when ready
         this.config = await this.getConfig();
+        console.log('party rock is in the houuuuuuse tonigggght');
 
         this.checkDefaultVars();
 
@@ -156,9 +157,6 @@ export default class ARButton extends Vue {
     }
 
     private checkDefaultVars(): void {
-        console.log('got config');
-        console.log(this.config);
-
         if (this.config && this.config.ar_button_config) {
             const arButtonConfig = this.config.ar_button_config;
 
@@ -188,21 +186,14 @@ export default class ARButton extends Vue {
                 this.templateQrText = this.qrText;
             }
 
-            console.log('whole css kabizzle');
-
             //const arButtonElement = document.getElementById(this.elementId);
             const arButtonElement = document.querySelector('[model="' + this.model + '"]');
-            console.log(arButtonElement);
-            
 
             if (arButtonElement) {
                 const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
                 const qrBorderColor = getComputedStyle(arButtonElement).getPropertyValue('--qr-code-border-color');
 
                 if (bgColor || qrBorderColor) {
-                    console.log('got the color from css vars');
-                    console.log('we do not have to write any vars in this case');
-
                     this.templateProjectColor = bgColor;
                 } else {
                     if (this.projectColor != DEFAULT_PROJECTCOLOR) {
@@ -212,7 +203,10 @@ export default class ARButton extends Vue {
                     }
 
                     (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
-                    (arButtonElement as HTMLElement).style.setProperty('--qr-code-border-color', this.templateProjectColor);
+                    (arButtonElement as HTMLElement).style.setProperty(
+                        '--qr-code-border-color',
+                        this.templateProjectColor
+                    );
                 }
             } else {
                 console.warn('Ar Button element is null.');
@@ -346,6 +340,8 @@ export default class ARButton extends Vue {
     padding: var(--padding, 8px 16px);
     display: inline-flex;
     align-items: center;
+
+    transition: background-color 0.2s ease;
 }
 
 .ar-button .ar-icon {
