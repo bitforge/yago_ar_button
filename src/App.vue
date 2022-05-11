@@ -2,22 +2,14 @@
     <div id="app">
         <h1>Yago AR Button</h1>
 
-<!--
         <ar-button
             :model="model"
             text="Im Raum platzieren"
             qr-size="400"
             qr-title="Los geht's"
             qr-text="QR Code mit dem Smartphone scannen, um das Produkt im Raum zu platzieren"
-        />-->
-
-        <br />
-        <br />
-        <ar-button  :model="model" />
-
-        <p><a href="#IloveAR<3">Anchor 1: Changes QR Code</a></p>
-        <p><a href="#Have_a_nice_day">Anchor 2: Another QR Code</a></p>
-        <p></p>
+            project-color="#2c3e50"
+        />
 
         <footer>Made with ❤️ by <a href="https://www.bitforge.ch/">Bitforge</a>.</footer>
     </div>
