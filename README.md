@@ -40,7 +40,8 @@ Include the WebComponent in your Website where the button should appear.
     text="Place in your space"
     qr-size="300"
     qr-title="Here we go!"
-    qr-text="Scan the QR Code with your smartphone to place the model in your space.">
+    qr-text="Scan the QR Code with your smartphone to place the model in your space."
+    project-color="#ff0000">
 </ar-button>
 ```
 
@@ -51,6 +52,7 @@ text                   |string |Text in the AR Button. Default is 'Place in your
 qr-size                |number |Size of the QR Code in the modal popup window.
 qr-title               |string |Title text in the modal popup window.
 qr-text                |string |Call to action text in the modal popup window.
+project-color          |string |Color to override project color from yago.
 
 
 # Styling
