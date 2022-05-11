@@ -1,13 +1,20 @@
 <template>
-    <div :id="elementId" class="ar-button" :ref="elementId">
-        <a ref="ar" rel="ar" :href="modelLink" @click="startAR" class="ar-link external">
+    <div :id="elementId" class="ar-button" :ref="elementId" v-if="showButton">
+        <a
+            ref="ar"
+            rel="ar"
+            :href="modelLink"
+            @click="startAR"
+            class="ar-link external"
+            :style="{ 'background-color': templateProjectColor }"
+        >
             <!-- image tag as first child is required for iOS -->
             <img />
             <ar-icon />
             {{ templateText }}
         </a>
         <modal-window v-show="showQrCode" @close="showQrCode = false">
-            <div class="qr-element" :ref="qrId"></div>
+            <div class="qr-element" :ref="qrId" :style="{ background: templateProjectColor }"></div>
             <h2 class="ar-modal-content">{{ templateQrTitle }}</h2>
             <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
                 {{ templateQrText }}
