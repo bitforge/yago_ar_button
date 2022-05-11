@@ -1,5 +1,5 @@
 <template>
-    <div :id="elementId" class="ar-button" :ref="elementId" v-if="showButton">
+    <div :id="elementId" class="ar-button" :ref="elementId" v-show="showButton">
         <a
             ref="ar"
             rel="ar"
@@ -83,7 +83,7 @@ export default class ARButton extends Vue {
 
     @Prop({ default: DEFAULT_PROJECTCOLOR })
     private projectColor!: string;
-    private templateProjectColor!: string;
+    private templateProjectColor: string = DEFAULT_PROJECTCOLOR;
 
     public baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
     public modelLink: URL;
@@ -130,7 +130,7 @@ export default class ARButton extends Vue {
     public async mounted() {
         // Fetch config from yago server and update when ready
         this.config = await this.getConfig();
-        console.log('party rock is in the houuuuuuse tonigggght');
+        console.log('3');
 
         this.checkDefaultVars();
 
@@ -196,13 +196,12 @@ export default class ARButton extends Vue {
                 this.templateQrText = this.qrText;
             }
 
-            //const arButtonElement = document.getElementById(this.elementId);
-            // const arButtonElement = document.querySelector('[model="' + this.model + '"]');
-            const arButtonElement = this.$refs[this.elementId]  as HTMLElement;
-            console.log(this.$refs);
-            console.log(this.$refs[this.elementId]);
-            
-            
+            const arButtonElement: HTMLElement = this.$refs[this.elementId] as HTMLElement;
+
+            if (!arButtonElement) {
+                console.warn('No AR Button Element found.');
+                return;
+            }
 
             if (arButtonElement) {
                 const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
@@ -212,20 +211,24 @@ export default class ARButton extends Vue {
                     console.log('color was set by variables');
                     
                     this.templateProjectColor = bgColor;
+                    console.log('getting project color from vars :', this.projectColor);
                 } else {
                     if (this.projectColor != DEFAULT_PROJECTCOLOR) {
+                        console.log(
+                            'projectcolor is NOT same as default, setting color to (from prop):',
+                            this.projectColor
+                        );
                         this.templateProjectColor = this.projectColor;
                     } else {
                         this.templateProjectColor = (arButtonConfig as any).projectColor;
+                        console.log('projectcolor is same as default (set from config):', this.templateProjectColor);
                     }
 
-                    /*
-                    (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
-                    (arButtonElement as HTMLElement).style.setProperty(
-                        '--qr-code-border-color',
-                        this.templateProjectColor
-                    );
-                    */
+                    // (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
+                    // (arButtonElement as HTMLElement).style.setProperty(
+                    //     '--qr-code-border-color',
+                    //     this.templateProjectColor
+                    // );
                 }
             } else {
                 console.warn('Ar Button element is null.');

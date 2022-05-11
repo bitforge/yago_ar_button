@@ -13,7 +13,7 @@
 
         <br />
         <br />
-        <ar-button :projectColor="'#ff0000'"  :model="model" />
+        <ar-button  :model="model" />
 
         <p><a href="#IloveAR<3">Anchor 1: Changes QR Code</a></p>
         <p><a href="#Have_a_nice_day">Anchor 2: Another QR Code</a></p>
