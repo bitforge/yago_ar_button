@@ -1,5 +1,5 @@
 <template>
-    <div :id="elementId" class="ar-button">
+    <div :id="elementId" class="ar-button" :ref="elementId">
         <a ref="ar" rel="ar" :href="modelLink" @click="startAR" class="ar-link external">
             <!-- image tag as first child is required for iOS -->
             <img />
@@ -23,7 +23,6 @@ import ARIcon from './ar-icon.vue';
 import modal from './modal-window.vue';
 import BrowserUnsupported from './browser-unsupported.vue';
 import QRCodeStyling, { DrawType } from 'qr-code-styling';
-import { warn } from 'vue-class-component/lib/util';
 
 declare global {
     interface Window {
@@ -187,13 +186,20 @@ export default class ARButton extends Vue {
             }
 
             //const arButtonElement = document.getElementById(this.elementId);
-            const arButtonElement = document.querySelector('[model="' + this.model + '"]');
+            // const arButtonElement = document.querySelector('[model="' + this.model + '"]');
+            const arButtonElement = this.$refs[this.elementId]  as HTMLElement;
+            console.log(this.$refs);
+            console.log(this.$refs[this.elementId]);
+            
+            
 
             if (arButtonElement) {
                 const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
                 const qrBorderColor = getComputedStyle(arButtonElement).getPropertyValue('--qr-code-border-color');
 
                 if (bgColor || qrBorderColor) {
+                    console.log('color was set by variables');
+                    
                     this.templateProjectColor = bgColor;
                 } else {
                     if (this.projectColor != DEFAULT_PROJECTCOLOR) {
@@ -202,11 +208,13 @@ export default class ARButton extends Vue {
                         this.templateProjectColor = (arButtonConfig as any).projectColor;
                     }
 
+                    /*
                     (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
                     (arButtonElement as HTMLElement).style.setProperty(
                         '--qr-code-border-color',
                         this.templateProjectColor
                     );
+                    */
                 }
             } else {
                 console.warn('Ar Button element is null.');
