@@ -94,6 +94,8 @@ export default class ARButton extends Vue {
     public showQrCode = false;
     public showBrowserHint = false;
 
+    private showButton = false;
+
     public qrCode: QRCodeStyling | null = null;
     public qrOptions = {
         width: this.qrSize - 24,
@@ -160,6 +162,8 @@ export default class ARButton extends Vue {
         }
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.$refs[this.qrId] as HTMLElement);
+
+        this.showButton = true;
     }
 
     private checkDefaultVars(): void {
