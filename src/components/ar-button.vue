@@ -1,13 +1,20 @@
 <template>
-    <div :id="elementId" class="ar-button" :ref="elementId">
-        <a ref="ar" rel="ar" :href="modelLink" @click="startAR" class="ar-link external">
+    <div :id="elementId" class="ar-button" :ref="elementId" v-if="showButton">
+        <a
+            ref="ar"
+            rel="ar"
+            :href="modelLink"
+            @click="startAR"
+            class="ar-link external"
+            :style="{ 'background-color': templateProjectColor }"
+        >
             <!-- image tag as first child is required for iOS -->
             <img />
             <ar-icon />
             {{ templateText }}
         </a>
         <modal-window v-show="showQrCode" @close="showQrCode = false">
-            <div class="qr-element" :ref="qrId"></div>
+            <div class="qr-element" :ref="qrId" :style="{ background: templateProjectColor }"></div>
             <h2 class="ar-modal-content">{{ templateQrTitle }}</h2>
             <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
                 {{ templateQrText }}
@@ -76,7 +83,7 @@ export default class ARButton extends Vue {
 
     @Prop({ default: DEFAULT_PROJECTCOLOR })
     private projectColor!: string;
-    private templateProjectColor!: string;
+    private templateProjectColor: string = DEFAULT_PROJECTCOLOR;
 
     public baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
     public modelLink: URL;
@@ -86,6 +93,8 @@ export default class ARButton extends Vue {
 
     public showQrCode = false;
     public showBrowserHint = false;
+
+    private showButton = false;
 
     public qrCode: QRCodeStyling | null = null;
     public qrOptions = {
@@ -122,6 +131,7 @@ export default class ARButton extends Vue {
         // Fetch config from yago server and update when ready
         this.config = await this.getConfig();
         console.log('party rock is in the houuuuuuse tonigggght');
+        console.log('2.0');
 
         this.checkDefaultVars();
 
@@ -153,6 +163,11 @@ export default class ARButton extends Vue {
         }
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.$refs[this.qrId] as HTMLElement);
+
+        console.log('appending qr code');
+        console.log(this.$refs[this.qrId]);
+
+        this.showButton = true;
     }
 
     private checkDefaultVars(): void {
@@ -185,13 +200,32 @@ export default class ARButton extends Vue {
                 this.templateQrText = this.qrText;
             }
 
+            const arButtonElement: HTMLElement = this.$refs[this.elementId] as HTMLElement;
+
+            console.log('refs are ---');
+            console.log(this.$refs);
+
+            console.log('identifier is ---');
+            console.log(this.elementId);
+
+
+            console.log('ar button element is ---');
+            console.log(this.$refs[this.elementId]);
+
+
+            if (!arButtonElement) return;
+
             //const arButtonElement = document.getElementById(this.elementId);
+<<<<<<< Updated upstream
             // const arButtonElement = document.querySelector('[model="' + this.model + '"]');
             const arButtonElement = this.$refs[this.elementId]  as HTMLElement;
             console.log(this.$refs);
             console.log(this.$refs[this.elementId]);
             
             
+=======
+            //const arButtonElement = document.querySelector('[model="' + this.model + '"]');
+>>>>>>> Stashed changes
 
             if (arButtonElement) {
                 const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
@@ -201,13 +235,20 @@ export default class ARButton extends Vue {
                     console.log('color was set by variables');
                     
                     this.templateProjectColor = bgColor;
+                    console.log('getting project color from vars :', this.projectColor);
                 } else {
                     if (this.projectColor != DEFAULT_PROJECTCOLOR) {
+                        console.log(
+                            'projectcolor is NOT same as default, setting color to (from prop):',
+                            this.projectColor
+                        );
                         this.templateProjectColor = this.projectColor;
                     } else {
                         this.templateProjectColor = (arButtonConfig as any).projectColor;
+                        console.log('projectcolor is same as default (set from config):', this.templateProjectColor);
                     }
 
+<<<<<<< Updated upstream
                     /*
                     (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
                     (arButtonElement as HTMLElement).style.setProperty(
@@ -215,6 +256,13 @@ export default class ARButton extends Vue {
                         this.templateProjectColor
                     );
                     */
+=======
+                    // (arButtonElement as HTMLElement).style.setProperty('--background-color', this.templateProjectColor);
+                    // (arButtonElement as HTMLElement).style.setProperty(
+                    //     '--qr-code-border-color',
+                    //     this.templateProjectColor
+                    // );
+>>>>>>> Stashed changes
                 }
             } else {
                 console.warn('Ar Button element is null.');
