@@ -173,9 +173,7 @@ export default class ARButton extends Vue {
             userLang = userLang.split('-')[0];
 
             const validLangs = ['en', 'de', 'fr', 'it'];
-            let chosenLang = '';
-
-            !validLangs.includes(userLang) ? (chosenLang = 'en') : (chosenLang = userLang);
+            const chosenLang = validLangs.includes(userLang) ? userLang : 'en';
 
             if (this.text == DEFAULT_TEXT) {
                 this.templateText = (arButtonConfig as any).arButtonText[chosenLang];
