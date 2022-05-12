@@ -130,7 +130,6 @@ export default class ARButton extends Vue {
     public async mounted() {
         // Fetch config from yago server and update when ready
         this.config = await this.getConfig();
-        console.log('3');
 
         this.checkDefaultVars();
 
@@ -203,20 +202,12 @@ export default class ARButton extends Vue {
                 const qrBorderColor = getComputedStyle(arButtonElement).getPropertyValue('--qr-code-border-color');
 
                 if (bgColor || qrBorderColor) {
-                    console.log('color was set by variables');
-
                     this.templateProjectColor = bgColor;
-                    console.log('getting project color from vars :', this.projectColor);
                 } else {
                     if (this.projectColor != DEFAULT_PROJECTCOLOR) {
-                        console.log(
-                            'projectcolor is NOT same as default, setting color to (from prop):',
-                            this.projectColor
-                        );
                         this.templateProjectColor = this.projectColor;
                     } else {
                         this.templateProjectColor = (arButtonConfig as any).projectColor;
-                        console.log('projectcolor is same as default (set from config):', this.templateProjectColor);
                     }
                 }
             } else {
