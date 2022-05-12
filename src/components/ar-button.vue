@@ -30,6 +30,7 @@ import ARIcon from './ar-icon.vue';
 import modal from './modal-window.vue';
 import BrowserUnsupported from './browser-unsupported.vue';
 import QRCodeStyling, { DrawType } from 'qr-code-styling';
+import { ArButtonConfig } from '../interfaces/ar-button-config';
 
 declare global {
     interface Window {
@@ -167,7 +168,7 @@ export default class ARButton extends Vue {
 
     private checkDefaultVars(): void {
         if (this.config && this.config.ar_button_config) {
-            const arButtonConfig = this.config.ar_button_config;
+            const arButtonConfig: ArButtonConfig = this.config.ar_button_config as ArButtonConfig;
 
             let userLang = navigator.language;
             userLang = userLang.split('-')[0];
@@ -176,19 +177,19 @@ export default class ARButton extends Vue {
             const chosenLang = validLangs.includes(userLang) ? userLang : 'en';
 
             if (this.text == DEFAULT_TEXT) {
-                this.templateText = (arButtonConfig as any).arButtonText[chosenLang];
+                this.templateText = arButtonConfig.arButtonText[chosenLang];
             } else {
                 this.templateText = this.text;
             }
 
             if (this.qrTitle == DEFAULT_QRTITLE) {
-                this.templateQrTitle = (arButtonConfig as any).buttonTitle[chosenLang];
+                this.templateQrTitle = arButtonConfig.buttonTitle[chosenLang];
             } else {
                 this.templateQrTitle = this.qrTitle;
             }
 
             if (this.qrText == DEFAULT_QRTEXT) {
-                this.templateQrText = (arButtonConfig as any).popupText[chosenLang];
+                this.templateQrText = arButtonConfig.popupText[chosenLang];
             } else {
                 this.templateQrText = this.qrText;
             }
