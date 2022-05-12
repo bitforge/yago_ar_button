@@ -198,11 +198,6 @@ export default class ARButton extends Vue {
 
             const arButtonElement: HTMLElement = this.$refs[this.elementId] as HTMLElement;
 
-            if (!arButtonElement) {
-                console.warn('No AR Button Element found.');
-                return;
-            }
-
             if (arButtonElement) {
                 const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
                 const qrBorderColor = getComputedStyle(arButtonElement).getPropertyValue('--qr-code-border-color');
