@@ -48,7 +48,7 @@ interface Config {
 const DEFAULT_TEXT = 'Place in your space';
 const DEFAULT_QRTITLE = 'Here we go!';
 const DEFAULT_QRTEXT = 'Scan the QR Code to place the model in your space.';
-const DEFAULT_QRSIZE = 200;
+const DEFAULT_QRSIZE = 300;
 const DEFAULT_DRAWMODE = 'svg';
 const DEFAULT_PROJECTCOLOR = '#074e68';
 
