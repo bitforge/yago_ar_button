@@ -4,6 +4,8 @@ A simple WebComponent to launch AR experiences on supported platforms directly o
 
 More details and examples on https://yago.cloud/
 
+Test Change
+
 ##  Installation
 
 ### Via npm
