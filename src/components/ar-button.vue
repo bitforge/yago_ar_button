@@ -86,7 +86,7 @@ export default class ARButton extends Vue {
     private projectColor!: string;
     private templateProjectColor: string = DEFAULT_PROJECTCOLOR;
 
-    public baseUrl = process.env.VUE_APP_GENIE_BASE_URL;
+    public baseUrl = process.env.VUE_APP_YAGO_BASE_URL;
     public modelLink: URL;
 
     public isArSupported = false;

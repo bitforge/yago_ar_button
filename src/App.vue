@@ -23,7 +23,7 @@ import ARButton from './components/ar-button.vue';
     components: { 'ar-button': ARButton },
 })
 export default class App extends Vue {
-    private model = process.env.VUE_APP_GENIE_MODEL;
+    private model = process.env.VUE_APP_YAGO_MODEL;
 }
 </script>
 <style>
