@@ -79,12 +79,23 @@ If you want to style further details, you need to customize the code and deploy 
 
 If you want to use your own custom analytics tracking, you can track clicks by listening to the `ar-button-clicked` event.
 This event is callback only and not intended to intercept the modal dialog that pops up.
-Check `event.target` to detect which <ar-button> has fired the event.
+Check `event.detail` to detect which <ar-button> has fired the event.
 
 ```javascript
 document.addEventListener('ar-button-click', function (e) {
-    // Your Analytics code here.
+    console.log(e.detail.arButtonId); // Logs the id of the ar button. This will be ar-button-<your model id>.
+    console.log(e.detail.modelId); // logs the slug / id of your model.
+    
+    // Your Analytics code will go here.
 }, false);
+```
+
+The `event.detail` object will look like this:
+```javascript
+{
+    arButtonId: ar-button-modelId,
+    modelId: modelId,
+}
 ```
 
 
