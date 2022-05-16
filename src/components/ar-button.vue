@@ -51,7 +51,6 @@ const DEFAULT_QRTEXT = 'Scan the QR Code to place the model in your space.';
 const DEFAULT_QRSIZE = 300;
 const DEFAULT_DRAWMODE = 'svg';
 const DEFAULT_PROJECTCOLOR = '#074e68';
-const AR_CLICK_EVENT = new Event('ar-button-click');
 
 @Component({
     name: 'ar-button',
@@ -291,7 +290,13 @@ export default class ARButton extends Vue {
     }
 
     public startAR(e: Event) {
-        document.dispatchEvent(AR_CLICK_EVENT);
+        const arClickEventPayload = {
+            modelId: this.model,
+            arButtonId: this.elementId,
+        };
+
+        const arClickEvent = new CustomEvent('ar-button-click', { detail: arClickEventPayload });
+        document.dispatchEvent(arClickEvent);
 
         // Show error on unsupported browsers (iOS WKWebView based third party browsers)
         if (!this.isBrowserSupported) {
