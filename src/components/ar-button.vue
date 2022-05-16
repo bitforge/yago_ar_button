@@ -13,20 +13,14 @@
             <ar-icon />
             {{ templateText }}
         </a>
-        <modal-window v-show="showQrCode" @close="showQrCode = false">
+        <modal-window :show="showQrCode" @close="showQrCode = false" > <!-- @close="showQrCode = false" -->
             <div class="qr-element" :ref="qrId" :style="{ background: templateProjectColor }"></div>
             <h2 class="ar-modal-content">{{ templateQrTitle }}</h2>
             <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
                 {{ templateQrText }}
             </p>
         </modal-window>
-        <browser-unsupported :modelLink="modelLink" v-show="showBrowserHint" @close="showBrowserHint = false" />
-        <dialog :open="showQrCode">
-            <p>Greetings, one and all!</p>
-            <form method="dialog">
-                <button>OK</button>
-            </form>
-        </dialog>
+        <browser-unsupported :modelLink="modelLink" v-show="showBrowserHint" @close="showBrowserHint = false" />    
     </div>
 </template>
 
@@ -299,6 +293,8 @@ export default class ARButton extends Vue {
     public startAR(e: Event) {
         document.dispatchEvent(AR_CLICK_EVENT);
 
+        this.showQrCode = true;
+
         // Show error on unsupported browsers (iOS WKWebView based third party browsers)
         if (!this.isBrowserSupported) {
             e.preventDefault();
@@ -316,7 +312,6 @@ export default class ARButton extends Vue {
             const qrUrl = new URL('?page_url=' + encodedUrl, this.modelLink);
 
             this.renderQrCode(qrUrl);
-            this.showQrCode = true;
         }
 
         // On AR supported devices just follow the link

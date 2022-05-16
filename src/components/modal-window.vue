@@ -1,6 +1,6 @@
 <template>
     <transition name="modal-fade">
-        <div :class="[{ 'ar-button-modal': true }, modalClass]">
+        <dialog :open="show" :class="[{ 'ar-button-modal': true }, modalClass]" role="dialog">
             <div class="modal-inner" role="dialog" v-on:click.stop>
                 <div class="ar-modal-header">
                     <slot name="header"></slot>
@@ -19,7 +19,7 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </dialog>
     </transition>
 </template>
 
@@ -31,13 +31,33 @@ export default class ModalWindow extends Vue {
     @Prop({ default: '' })
     private modalClass!: string;
 
+    @Prop({ default: false })
+    private show!: boolean;
+
     private close() {
         this.$emit('close');
+    }
+
+    public constructor() {
+        super();
+
+        console.log('el construttore');
+        console.log(this.show);
     }
 }
 </script>
 
 <style>
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+    background-color: red;
+}
+
 .modal-fade-enter,
 .modal-fade-leave-active {
     opacity: 0;
