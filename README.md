@@ -77,6 +77,16 @@ ar-button {
 
 If you want to style further details, you need to customize the code and deploy Yago Button yourself.
 
+# Tracking
+
+If you want to use your own custom analytics tracking, you can track clicks by listening to the 'ar-button-clicked' event. The event is completely empty and provides no intercept function.
+
+```javascript
+document.addEventListener('ar-button-click', function (e) { 
+    // Your Analytics code here.
+}, false);
+```
+
 
 # Development
 
