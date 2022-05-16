@@ -21,6 +21,12 @@
             </p>
         </modal-window>
         <browser-unsupported :modelLink="modelLink" v-show="showBrowserHint" @close="showBrowserHint = false" />
+        <dialog :open="showQrCode">
+            <p>Greetings, one and all!</p>
+            <form method="dialog">
+                <button>OK</button>
+            </form>
+        </dialog>
     </div>
 </template>
 
