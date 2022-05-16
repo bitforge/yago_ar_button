@@ -79,7 +79,7 @@ If you want to style further details, you need to customize the code and deploy 
 
 # Tracking
 
-If you want to use your own custom analytics tracking, you can track clicks by listening to the 'ar-button-clicked' event. The event is completely empty and provides no intercept function.
+If you want to use your own custom analytics tracking, you can track clicks by listening to the `ar-button-clicked` event. The event is completely empty and provides no intercept function.
 
 ```javascript
 document.addEventListener('ar-button-click', function (e) { 
