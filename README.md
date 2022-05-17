@@ -1,6 +1,6 @@
 # Yago AR Button
 
-A simple WebComponent to launch AR experiences on supported platforms directly or show a QR code to switch to supported devices.  
+A simple WebComponent to launch AR experiences on supported platforms directly or show a QR code to switch to supported devices.
 
 More details and examples on https://yago.cloud/
 
@@ -77,12 +77,24 @@ If you want to style further details, you need to customize the code and deploy 
 
 # Tracking
 
-If you want to use your own custom analytics tracking, you can track clicks by listening to the `ar-button-clicked` event. The event is empty and provides no intercept function.
+If you want to use your own analytics tracking, you can track clicks by listening to the `ar-button-clicked` event.
+Check `event.detail` to detect which `<ar-button>` has fired the event.
 
 ```javascript
-document.addEventListener('ar-button-click', function (e) { 
-    // Your Analytics code here.
+document.addEventListener('ar-button-click', function (e) {
+    console.log(e.detail.arButtonId); // Logs the id of the ar button. This will be ar-button-<your model id>.
+    console.log(e.detail.modelId); // logs the slug / id of your model.
+
+    // Your Analytics code will go here.
 }, false);
+```
+
+The `event.detail` object will look like this:
+```javascript
+{
+    arButtonId: ar-button-modelId,
+    modelId: modelId,
+}
 ```
 
 
