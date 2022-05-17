@@ -1,0 +1,1 @@
+{"version":3,"file":"language-object.js","sourceRoot":"","sources":["../../src/interfaces/language-object.ts"],"names":[],"mappings":"","sourcesContent":["export default interface LanguageObject {\n    de: string;\n    en: string;\n    fr: string;\n    it: string;\n}"]}
