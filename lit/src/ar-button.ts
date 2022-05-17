@@ -228,7 +228,7 @@ export class ArButton extends LitElement {
                         <a href="https://yago.cloud/">
                             Yago
                             <img src="https://yago.cloud/static/yago/img/yago_icon.png" />
-                        </a> 
+                        </a>
                     </p>
                 </div>
             </div>
