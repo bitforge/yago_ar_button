@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "serve": "wds --watch",
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf /dist && tsc -p tsconfig.json",
     "watch": "watch 'yarn build' ./src"
   },
   "author": "Joe Mama",
