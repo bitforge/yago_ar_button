@@ -1,1 +1,0 @@
-{"version":3,"file":"config.js","sourceRoot":"","sources":["../../src/interfaces/config.ts"],"names":[],"mappings":"","sourcesContent":["import ArButtonConfig from './ar-button-config';\n\nexport default interface Config {\n    ar_button_config: ArButtonConfig | null;\n    qr_config: any | null;\n    quicklook_link: string | null;\n    site_url: string | null;\n}"]}
