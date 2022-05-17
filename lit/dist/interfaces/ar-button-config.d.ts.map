@@ -1,1 +1,0 @@
-{"version":3,"file":"ar-button-config.d.ts","sourceRoot":"","sources":["../../src/interfaces/ar-button-config.ts"],"names":[],"mappings":"AAAA,OAAO,cAAc,MAAM,mBAAmB,CAAC;AAE/C,MAAM,CAAC,OAAO,WAAW,cAAc;IACnC,YAAY,EAAE,cAAc,CAAC;IAC7B,WAAW,EAAE,cAAc,CAAC;IAC5B,SAAS,EAAE,cAAc,CAAC;IAC1B,YAAY,EAAE,MAAM,CAAC;CACxB"}
