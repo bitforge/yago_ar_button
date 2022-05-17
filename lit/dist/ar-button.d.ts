@@ -15,7 +15,7 @@ export declare class ArButton extends LitElement {
     };
     showQrCode: boolean;
     showButton: boolean;
-    modalHtml: string;
+    modalHtml: import("lit-html").TemplateResult<1>;
     render(): import("lit-html").TemplateResult<1>;
     connectedCallback(): Promise<void>;
     startAr(e: Event): void;
