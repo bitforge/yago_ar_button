@@ -1,5 +1,6 @@
 import {html, css, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
+import Config from './interfaces/config';
 
 @customElement('ar-button')
 export class ArButton extends LitElement {
@@ -195,7 +196,7 @@ export class ArButton extends LitElement {
 
     modelLink = '';
 
-    config = {
+    config: Config = {
         site_url: null,
         quicklook_link: null,
         qr_config: null,

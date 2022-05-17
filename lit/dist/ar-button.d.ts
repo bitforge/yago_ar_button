@@ -1,4 +1,5 @@
 import { LitElement } from 'lit';
+import Config from './interfaces/config';
 export declare class ArButton extends LitElement {
     static styles: import("lit").CSSResult;
     model: string;
@@ -7,12 +8,7 @@ export declare class ArButton extends LitElement {
     buttonText: string;
     baseUrl: string;
     modelLink: string;
-    config: {
-        site_url: null;
-        quicklook_link: null;
-        qr_config: null;
-        ar_button_config: null;
-    };
+    config: Config;
     showQrCode: boolean;
     showButton: boolean;
     modalHtml: import("lit-html").TemplateResult<1>;
