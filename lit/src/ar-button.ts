@@ -2,8 +2,8 @@ import {html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import Config from './interfaces/config';
 import { styles } from './styles';
-import './components/ar-icon';
-import './components/ar-modal';
+import './components/ar-icon/ar-icon';
+import './components/ar-modal/ar-modal';
 
 @customElement('ar-button')
 export class ArButton extends LitElement {
@@ -38,43 +38,11 @@ export class ArButton extends LitElement {
     @state()
     showButton = false;
 
-    @property(  )
-    testVar = 'Hansueli!';
-
-    modalHtml = html`
-        <div class="ar-button-modal ${!this.showQrCode ? 'hidden' : ''}">
-            <div class="modal-inner" role="dialog">  
-                <div class="ar-modal-header">
-                    <h2 class="ar-modal-content">${this.qrTitle}</h2>
-                    <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
-                </div>
-                <section class="ar-modal-body">
-                    <div class="qr-element"></div>
-                    <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
-                        ${this.qrText}
-                    </p>
-                </section>
-                <div class="ar-modal-footer">
-                    <p>
-                        Powered by
-                        <a href="https://yago.cloud/">
-                            Yago
-                            <img src="https://yago.cloud/static/yago/img/yago_icon.png" />
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
-
-
     render() { 
         return html`
         <div
             id="${this.elementId}" 
             class="ar-button ${!this.showButton ? 'hidden' : ''}">
-
-            <ar-modal></ar-modal>
 
             <a
                 rel="ar"
@@ -87,29 +55,11 @@ export class ArButton extends LitElement {
                     ${this.buttonText}
             </a>
             
-            <div class="ar-button-modal ${!this.showQrCode ? 'hidden' : ''}">
-                <div class="modal-inner" role="dialog">  
-                    <div class="ar-modal-header">
-                        <h2 class="ar-modal-content">${this.qrTitle}</h2>
-                        <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
-                    </div>
-                    <section class="ar-modal-body">
-                        <div class="qr-element"></div>
-                        <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
-                            ${this.qrText}
-                        </p>
-                    </section>
-                    <div class="ar-modal-footer">
-                        <p>
-                            Powered by
-                            <a href="https://yago.cloud/">
-                                Yago
-                                <img src="https://yago.cloud/static/yago/img/yago_icon.png" />
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <ar-modal
+                qrTitle="${this.qrTitle}"
+                qrText="${this.qrText}"
+                showQrCode="${this.showQrCode}">
+            </ar-modal>
         </div>
         `;
     }
@@ -121,10 +71,6 @@ export class ArButton extends LitElement {
         this.config = await this.getConfig();
 
         this.showButton = true;
-    }
-
-    changeVariable(): void {
-        this.testVar = 'Peter meier ueli sepp!!!!!';
     }
 
     startAr(e: Event): void {
