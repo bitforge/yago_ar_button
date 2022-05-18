@@ -11,5 +11,9 @@ export const styles = [
     .ar-icon-path {
         fill: var(--color, #ffffff);
     }
+
+    .hidden {
+      display: none !important;
+    }
   `,
 ];

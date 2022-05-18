@@ -19,6 +19,10 @@ export const styles = [
         opacity: 1;
     }
 
+    .popup-hidden {
+        display: none !important;
+    }
+
     .ar-button-modal .modal-inner {
         display: flex;
         flex-direction: column;

@@ -16,12 +16,7 @@ export const styles = [
         padding: var(--padding, 8px 16px);
         display: inline-flex;
         align-items: center;
-
         transition: background-color 0.2s ease;
-    }
-
-    .hidden {
-        display: none !important;
     }
 
     .ar-button {
@@ -38,6 +33,10 @@ export const styles = [
         padding: var(--padding, 8px 16px);
         display: inline-flex;
         align-items: center;
+    }
+
+    .hidden {
+      display: none !important;
     }
   `,
 ];
