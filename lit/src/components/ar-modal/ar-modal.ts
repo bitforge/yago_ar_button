@@ -7,9 +7,6 @@ export class ArModal extends LitElement {
     static styles = styles;
 
     @property()
-    showQrCode = false;
-
-    @property()
     qrTitle = 'Default qr title Text';
 
     @property()
@@ -19,14 +16,8 @@ export class ArModal extends LitElement {
     qrSize = 300;
 
     render() {
-        console.log('rener ar modal');
-        
-
-        console.log('these are the propss');
-        console.log(this.showQrCode);
-
         return html`
-            <div class="ar-button-modal  ${!this.showQrCode ? 'popup-hidden' : ''}">
+            <div class="ar-button-modal">
                 <div class="modal-inner" role="dialog">  
                     <div class="ar-modal-header">
                         <h2 class="ar-modal-content">${this.qrTitle}</h2> 
@@ -53,6 +44,7 @@ export class ArModal extends LitElement {
     }
 
     closeModalWindow(): void {
-        this.showQrCode = false;
+        const event = new CustomEvent('modal-close', { bubbles: true, });
+        this.dispatchEvent(event);
     }
 }
