@@ -26,7 +26,7 @@ export class ArModal extends LitElement {
         console.log(this.showQrCode);
 
         return html`
-            <div class="ar-button-modal  ${!this.showQrCode ? 'popup-hidden poopybuttface' : ''}">
+            <div class="ar-button-modal  ${!this.showQrCode ? 'popup-hidden' : ''}">
                 <div class="modal-inner" role="dialog">  
                     <div class="ar-modal-header">
                         <h2 class="ar-modal-content">${this.qrTitle}</h2> 
