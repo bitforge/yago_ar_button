@@ -56,9 +56,10 @@ export class ArButton extends LitElement {
             </a>
             
             <ar-modal
+                @modal-close=${this.closeModalWindow}
+                class="${!this.showQrCode ? 'hidden' : ''}"
                 qrTitle="${this.qrTitle}"
-                qrText="${this.qrText}"
-                showQrCode="${this.showQrCode}">
+                qrText="${this.qrText}">
             </ar-modal>
         </div>
         `;
@@ -74,12 +75,7 @@ export class ArButton extends LitElement {
     }
 
     startAr(e: Event): void {
-        console.log('showing qr code?'); 
-
-        
         e.preventDefault();
-
-        console.log('showing qr code?');
         
         this.showQrCode = true;
     }
