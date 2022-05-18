@@ -15,6 +15,9 @@ export class ArModal extends LitElement {
     @property()
     qrText = 'Default qr Text';
 
+    @property()
+    qrSize = 300;
+
     render() {
         console.log('rener ar modal');
         
@@ -23,15 +26,15 @@ export class ArModal extends LitElement {
         console.log(this.showQrCode);
 
         return html`
-            <div class="ar-button-modal ${!this.showQrCode ? 'hidden' : ''}">
+            <div class="ar-button-modal  ${!this.showQrCode ? 'popup-hidden poopybuttface' : ''}">
                 <div class="modal-inner" role="dialog">  
                     <div class="ar-modal-header">
-                        <h2 class="ar-modal-content">${this.qrTitle}</h2>
+                        <h2 class="ar-modal-content">${this.qrTitle}</h2> 
                         <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
                     </div>
                     <section class="ar-modal-body">
                         <div class="qr-element"></div>
-                        <p class="ar-modal-content" :style="{ width: qrSize + 'px' }">
+                        <p class="ar-modal-content" style="{ width: ${this.qrSize}px }">
                             ${this.qrText}
                         </p>
                     </section>
