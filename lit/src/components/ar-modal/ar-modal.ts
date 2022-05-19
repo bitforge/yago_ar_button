@@ -1,6 +1,8 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { styles } from './styles';
+//import QRCodeStyling, { Options } from 'qr-code-styling';
 
 @customElement('ar-modal')
 export class ArModal extends LitElement {
@@ -15,6 +17,21 @@ export class ArModal extends LitElement {
     @property()
     qrSize = 300;
 
+    @query('#qr1')
+    qrCodeElement: any;
+
+    qrCodeRef = createRef();
+
+    qrOptions = {
+        width: this.qrSize - 24,
+        height: this.qrSize - 24,
+        type: 'svg',
+        data: '',
+        margin: 10,
+        errorCorrectionLevel: 'Q',
+        image: undefined,
+    };
+
     render() {
         return html`
             <div class="ar-button-modal">
@@ -24,7 +41,7 @@ export class ArModal extends LitElement {
                         <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
                     </div>
                     <section class="ar-modal-body">
-                        <div class="qr-element"></div>
+                        <div ${ref(this.qrCodeRef)} class="qr-element" ></div>
                         <p class="ar-modal-content" style="{ width: ${this.qrSize}px }">
                             ${this.qrText}
                         </p>
@@ -41,6 +58,20 @@ export class ArModal extends LitElement {
                 </div>
             </div>
         `;
+    }
+
+    updated() {
+        if (!this.qrCodeRef.value) {
+            console.error('QR Element is null you potato');
+            return;
+        }
+
+        console.log('after return brudda 222');
+        //const a = new QRCodeStyling(this.qrOptions as Options)
+        
+    
+        //this.qrCode = new QRCodeStyling(this.qrOptions);
+        //this.qrCode.append(this.qrCodeRef.value as HTMLElement);
     }
 
     closeModalWindow(): void {
