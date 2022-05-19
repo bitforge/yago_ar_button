@@ -1,6 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { styles } from '../../styles';
+import { styles } from './styles';
 
 @customElement('ar-icon')
 export class ArIcon extends LitElement {

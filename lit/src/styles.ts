@@ -38,5 +38,62 @@ export const styles = [
     .hidden {
       display: none !important;
     }
+
+    .qr-canvas {
+        display: block;
+    }
+
+    .qr-element {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding: 12px;
+        background: var(--qr-code-border-color, #074e68);
+    }
+
+    .qr-element img {
+        display: block;
+    }
+
+    .ar-modal-header h2 {
+        margin: 0;
+        padding: 15px 10px 10px 10px;
+    }
+
+    .ar-modal-content {
+        color: #000000;
+        text-align: left;
+    }
+
+    h2.ar-modal-content {
+        font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+        font-size: 24px;
+        margin: 0;
+        padding: 20px 0;
+    }
+
+    p.ar-modal-content {
+        font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+        font-size: 16px;
+        margin: 0;
+        padding: 0 0 16px 0;
+    }
+
+    ar-modal {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        -webkit-justify-content: center;
+        -moz-box-pack: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        align-items: center;
+        background-color: rgba(0,0,0,.3);
+        padding: 10px;
+    }
   `,
 ];
