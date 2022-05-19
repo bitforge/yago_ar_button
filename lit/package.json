@@ -4,8 +4,7 @@
   "version": "0.0.1",
   "description": "awd",
   "source": "src/ar-button.ts",
-  "main": "dist/ar-button.js",
-  "module": "dist/ar-button-module.js",
+  "module": "dist/ar-button.js",
   "types": "dist/types.d.ts",
   "type": "module",
   "targets": {
@@ -21,6 +20,7 @@
   "author": "Joe Mama",
   "license": "The Corporate Joe Mama Licence",
   "dependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.5.0",
     "@swc/helpers": "^0.3.13",
     "@types/qrcode": "^1.4.2",
     "lit": "^2.1.0",
