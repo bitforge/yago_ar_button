@@ -348,6 +348,9 @@ export default class ARButton extends Vue {
 .ar-button > .ar-link {
     background-color: var(--background-color, #074e68);
     color: var(--color, #ffffff);
+    font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
+    font-weight: var(--font-weight, 400);
+    font-size: var(--font-size, 16px);
     text-decoration: var(--text-decoration, none);
     border: var(--border, none);
     border-radius: var(--border-radius, 8px);
