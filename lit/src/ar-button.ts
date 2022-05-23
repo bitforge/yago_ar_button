@@ -4,24 +4,40 @@ import Config from './interfaces/config';
 import { styles } from './styles';
 import './components/ar-icon/ar-icon';
 import './components/ar-modal/ar-modal';
+import './components/browser-unsupported/browser-unsupported';
 import { createRef, ref } from 'lit/directives/ref.js';
 import QRCodeStyling, { DrawType } from 'qr-code-styling';
+import ArButtonConfig from './interfaces/ar-button-config';
 
 @customElement('ar-button')
 export class ArButton extends LitElement {
     static styles = styles;
 
+    DEFAULT_TEXT = 'Place in your space';
+    DEFAULT_QRTITLE = 'Here we go!';
+    DEFAULT_QRTEXT = 'Scan the QR Code to place the model in your space.';
+    DEFAULT_QRSIZE = 300;
+    DEFAULT_DRAWMODE = 'svg';
+    DEFAULT_PROJECTCOLOR = '#074e68';
+
     @property()
     model = process.env.YAGO_MODEL;
 
     @property()
-    qrTitle = 'Default Btn Text';
+    buttonText = this.DEFAULT_TEXT;
+    templateButtonText = '';
 
     @property()
-    qrText = 'Default QR Title';
+    qrTitle = this.DEFAULT_QRTITLE;
+    templateQrTitle = '';
 
     @property()
-    buttonText = 'Default QR Text';
+    qrText = this.DEFAULT_QRTEXT;
+    templateQrText = '';
+
+    @property()
+    projectColor = '';
+    templateProjectColor: string = this.DEFAULT_PROJECTCOLOR;
 
     baseUrl = process.env.YAGO_BASE_URL;
 
@@ -40,12 +56,19 @@ export class ArButton extends LitElement {
     @state()
     showButton = false;
 
+    @state()
+    showBrowserHint = false;
+
     @property()
     qrSize = 300;
 
     qrCode: QRCodeStyling | null = null;
 
     qrCodeRef = createRef();
+    arButtonRef = createRef();
+
+    isArSupported = false;
+    isBrowserSupported = true;
 
     qrOptions = {
         width: this.qrSize - 24,
@@ -67,24 +90,29 @@ export class ArButton extends LitElement {
                 rel="ar"
                 href="${this.modelLink}"
                 @click=${this.startAr}
+                ${ref(this.arButtonRef)}
+                style="background-color: ${this.templateProjectColor};"
                 class="ar-link external">
                     <!-- image tag as first child is required for iOS -->
                     <img />
                     <ar-icon></ar-icon>
-                    ${this.buttonText}
+                    ${this.templateButtonText}
             </a>
             
             <ar-modal
                 @modal-close=${this.closeModalWindow}
                 class="${!this.showQrCode ? 'hidden' : ''}"
-                qrTitle="${this.qrTitle}"
-                qrText="${this.qrText}">
-                <h2 class="ar-modal-content">${this.qrTitle}</h2> 
-                <div ${ref(this.qrCodeRef)} class="qr-element" ></div>
-                <p class="ar-modal-content" style="{ width: ${this.qrSize}px }">
-                    ${this.qrText}
-                </p>
+                qrTitle="${this.templateQrTitle}"
+                qrText="${this.templateQrText}">
+                <h2 slot="header" class="ar-modal-content">${this.qrTitle}</h2> 
+                <div slot="default">
+                    <div ${ref(this.qrCodeRef)} class="qr-element" style="background: ${this.templateProjectColor};" ></div>
+                    <p class="ar-modal-content" style="{ width: ${this.qrSize}px }">
+                        ${this.qrText}
+                    </p>
+                </div>
             </ar-modal>
+            <browser-unsupported class="${this.showBrowserHint ? '' : ''}" modelLink="${this.modelLink}" @modal-close="${this.showBrowserHint = false}"></browser-unsupported>
         </div>
         `;
     }
@@ -104,35 +132,165 @@ export class ArButton extends LitElement {
         
         this.config = await this.getConfig();
 
+        this.checkDefaultVars();
+
         this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
 
+        // On iOS: Change model link to open USDZ with AR Quicklook directly (Yago Redirect to USDZ model)
+        if (this.isIos() && this.isQuicklookSupported() && this.config.quicklook_link) {
+            this.isArSupported = true;
+            this.isBrowserSupported = this.checkIosBrowserSupport();
+            if (this.isBrowserSupported) {
+                this.modelLink = new URL(this.config.quicklook_link);
+            }
+            const link = this.arButtonRef as HTMLAnchorElement;
+            link.addEventListener('message', this.onCallToActionButtonTapped);
+        }
+
+        this.qrCode = new QRCodeStyling(this.qrOptions);
+        this.qrCode.append(this.qrCodeRef.value as HTMLElement);
+
         this.showButton = true;
+    }
+
+    checkDefaultVars(): void {
+        if (this.config && this.config.ar_button_config) {
+            const arButtonConfig: ArButtonConfig = this.config.ar_button_config as ArButtonConfig;
+
+            let userLang = navigator.language;
+            userLang = userLang.split('-')[0];
+
+            const validLangs = ['en', 'de', 'fr', 'it'];
+            const chosenLang = validLangs.includes(userLang) ? userLang : 'en';
+
+            if (this.buttonText == this.DEFAULT_TEXT) {
+                this.templateButtonText = arButtonConfig.arButtonText[chosenLang];
+            } else {
+                this.templateButtonText = this.buttonText;
+            }
+
+            if (this.qrTitle == this.DEFAULT_QRTITLE) {
+                this.templateQrTitle = arButtonConfig.buttonTitle[chosenLang];
+            } else {
+                this.templateQrTitle = this.qrTitle;
+            }
+
+            if (this.qrText == this.DEFAULT_QRTEXT) {
+                this.templateQrText = arButtonConfig.popupText[chosenLang];
+            } else {
+                this.templateQrText = this.qrText;
+            }
+
+            console.log('testing');
+            console.log(this.arButtonRef);
+
+            if (this.arButtonRef && this.arButtonRef.value) {
+                const arButtonElement: Element = this.arButtonRef.value;
+
+                const bgColor = getComputedStyle(arButtonElement).getPropertyValue('--background-color');
+                const qrBorderColor = getComputedStyle(arButtonElement).getPropertyValue('--qr-code-border-color');
+
+                if (bgColor || qrBorderColor) {
+                    this.templateProjectColor = bgColor;
+                } else {
+                    if (this.projectColor != this.DEFAULT_PROJECTCOLOR) {
+                        this.templateProjectColor = this.projectColor;
+                    } else {
+                        this.templateProjectColor = (arButtonConfig as any).projectColor;
+                    }
+                }
+            } else {
+                console.warn('AR Button Element is Null');
+            }
+        }
+    }
+
+    onCallToActionButtonTapped(event: Event): void {
+        if ((event as any).data == '_apple_ar_quicklook_button_tapped') {
+            if (this.config.site_url) {
+                window.location.assign('');
+            } else {
+                console.error('Model site_url must be defined when using callToAction.');
+            }
+        }
+    } 
+
+    isIos(): boolean {
+        return (
+            (/iPad|iPod|iPhone/.test(navigator.platform) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+            !(window as any).MSStream
+        );
+    }
+
+    isAndroid(): boolean {
+        return /android/i.test(navigator.userAgent);
+    }
+
+    isQuicklookSupported(): boolean {
+        const link = this.arButtonRef.value as HTMLAnchorElement;
+        if (link) return link.relList.supports('ar');
+        return false;
+    }
+
+    checkIosBrowserSupport(): boolean {
+        // On iOS, some WKWebView based browsers like Chrome and Firefox do support Quicklook links,
+        // while others like Brave, Opera or DuckDuckGo do not. They either offer to download the
+        // USDZ File or, worse, show it's plain content. It's hard to detect unsupported browsers
+        // since it can also be an embedded WebView in an App (e.g. LinkedIn In-App Browser).
+        // Therefore, if WKWebView is detected, we only allow browsers with known Quicklook support.
+
+        if (this.isWKWebView()) {
+            // https://chromium.googlesource.com/chromium/src/+/HEAD/docs/ios/user_agent.md
+            const isChrome = navigator.userAgent.includes('CriOS/');
+
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox#firefox_for_ios
+            const isFirefox = navigator.userAgent.includes('FxiOS/');
+
+            // https://blogs.windows.com/msedgedev/2017/10/05/microsoft-edge-ios-android-developer/
+            const isEdge = navigator.userAgent.includes('EdgiOS/');
+
+            // Only allow whitelisted browsers
+            return isChrome || isFirefox || isEdge;
+        }
+
+        // All other browsers like Safari, SFSafariViewController and others are feature detected
+        return true;
+    }
+
+    isWKWebView(): boolean {
+        const _window = window as any;
+        return _window.webkit && _window.webkit.messageHandlers;
     }
 
     startAr(e: Event): void {
         e.preventDefault();
 
-        // if (!this.isBrowserSupported) {
-        //     e.preventDefault();
-        //     this.showBrowserHint = true;
-        //     return;
-        // }
-
-        //if (!this.isArSupported) {
-        // Pass current document url in QR code as page_url parameter
-        // This ensures correct return urls in single page apps
+        if (!this.isBrowserSupported) {
+            e.preventDefault();
+            this.showBrowserHint = true;
+            return;
+        }
 
         if (!this.modelLink) {
             console.error('ArButton: StartAr: ModelLink is empty.')
             return;
         }
 
-        const encodedUrl = encodeURIComponent(window.location.toString());
-        const qrUrl = new URL('?page_url=' + encodedUrl, this.modelLink);
-        console.log('qr url');
-        
-        this.renderQrCode(qrUrl);
-        this.showQrCode = true;
+        // Show QR Code on devices without AR Support
+        if (!this.isArSupported) {
+            e.preventDefault();
+
+            // Pass current document url in QR code as page_url parameter
+            // This ensures correct return urls in single page apps
+            const encodedUrl = encodeURIComponent(window.location.toString());
+            const qrUrl = new URL('?page_url=' + encodedUrl, this.modelLink);
+
+            this.renderQrCode(qrUrl);
+            this.showQrCode = true;
+        }
+
+        // On AR supported devices just follow the link
     }
 
     renderQrCode(url: URL) {

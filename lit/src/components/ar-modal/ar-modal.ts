@@ -1,22 +1,24 @@
 import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { styles } from './styles';
 
 @customElement('ar-modal')
 export class ArModal extends LitElement {
     static styles = styles;
 
+    @property()
+    modalClass = '';
+
     render() {
         return html`
-            <div class="ar-button-modal">
+            <div class="ar-button-modal ${this.modalClass}">
                 <div class="modal-inner" role="dialog">  
                     <div class="ar-modal-header">
                         <slot name="header"></slot>
                         <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
                     </div>
                     <div class="ar-modal-body">
-                        ig bims a dext
-                        <slot></slot>
+                        <slot name="default"></slot>
                     </div>
                     <div class="ar-modal-footer">
                         <p>
