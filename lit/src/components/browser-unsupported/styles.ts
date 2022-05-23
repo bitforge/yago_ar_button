@@ -2,23 +2,23 @@ import { css } from 'lit';
 
 export const styles = [
   css`
-    .ar-button-browser-unsupported .button-close {
+     .button-close {
         display: none;
     }
 
-    .ar-button-browser-unsupported header {
+     header {
         padding: 0 15px;
     }
 
-    .ar-button-browser-unsupported section {
+     section {
         margin: 0;
     }
 
-    .ar-button-browser-unsupported .notsupported-modal-header {
+     .notsupported-modal-header {
         position: relative;
     }
 
-    .ar-button-browser-unsupported .copy-container {
+     .copy-container {
         position: relative;
         display: flex;
         flex-direction: row;
@@ -28,12 +28,12 @@ export const styles = [
         padding: 0 24px 24px 24px;
     }
 
-    .ar-button-browser-unsupported .content {
+     .content {
         padding: 0 24px;
         text-align: center;
     }
 
-    .ar-button-browser-unsupported .model-url {
+     .model-url {
         padding: 4px 8px;
         background: transparent;
         border-radius: 4px 0 0 4px;
@@ -45,7 +45,7 @@ export const styles = [
         margin: 0;
     }
 
-    .ar-button-browser-unsupported .copy-to-clipboard {
+     .copy-to-clipboard {
         border-radius: 0 4px 4px 0;
         border: 1px solid #999;
         border-left: 0;
@@ -57,17 +57,17 @@ export const styles = [
         transition: background-color 0.2s ease-in;
     }
 
-    .ar-button-browser-unsupported .copy-to-clipboard.copied {
+     .copy-to-clipboard.copied {
         background-color: #4caf50;
     }
 
-    .ar-button-browser-unsupported .ar-modal-header h2 {
+     .ar-modal-header h2 {
         margin: 0;
         padding: 45px 10px 20px 15px;
         text-align: center;
     }
 
-    .ar-button-browser-unsupported .button-close {
+     .button-close {
         border: none;
         background: none;
         position: absolute;
@@ -76,7 +76,7 @@ export const styles = [
         font-size: 18px;
     }
 
-    .ar-button-browser-unsupported .clipboard-tooltip {
+     .clipboard-tooltip {
         visibility: visible;
         width: 120px;
         background-color: #555;
@@ -94,7 +94,7 @@ export const styles = [
         font-size: 12px;
     }
 
-    .ar-button-browser-unsupported .clipboard-tooltip ::after {
+     .clipboard-tooltip ::after {
         content: '';
         position: absolute;
         top: -10px;
@@ -105,7 +105,7 @@ export const styles = [
         border-color: transparent transparent #555 transparent;
     }
 
-    .ar-button-browser-unsupported .copy-container:hover .clipboard-tooltip {
+     .copy-container:hover .clipboard-tooltip {
         visibility: hidden;
         opacity: 0;
     }
