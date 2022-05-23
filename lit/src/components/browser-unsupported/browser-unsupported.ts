@@ -78,14 +78,14 @@ export class BrowserUnsupported extends LitElement {
     render() {
         return html`
         <ar-modal modalClass="ar-button-browser-unsupported">
-            <template slot=header>
+            <div slot=header>
                 <div class="notsupported-modal-header">
                     <h2>${this.browserUnsupportedTitle}</h2>
                     <button type="button" class="button-close" @click=${this.close}>✕</button>
                 </div>
-            </template>
+            </div>
 
-            <template slot=default>
+            <div slot=default>
                 <p class="content">
                     ${this.browserUnsupportedBody}
                 </p>
@@ -123,7 +123,7 @@ export class BrowserUnsupported extends LitElement {
                         </svg>
                     </button>
                 </div>
-            </template>
+            </div>
         </ar-modal>
         `;
     }
