@@ -1,4 +1,4 @@
-import { MultiLanguageString } from "./multilanguage-string";
+import { MultiLanguageString } from './multilanguage-string';
 
 export interface ArButtonConfig {
     arButtonText: MultiLanguageString;
