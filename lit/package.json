@@ -14,11 +14,14 @@
   },
   "scripts": {
     "serve": "parcel ./index.html --port 8080 --target default",
+
     "watch": "parcel watch --target default",
-    "build": "parcel build --target default"
+
+    "build:prod": "parcel build --target default",
+    "build:dev": "NODE_ENV=development parcel build --target default"
   },
-  "author": "Joe Mama",
-  "license": "The Corporate Joe Mama Licence",
+  "author": "Bitforge AG",
+  "license": "MIT",
   "dependencies": {
     "@parcel/transformer-typescript-tsc": "^2.5.0",
     "@swc/helpers": "^0.3.13",
