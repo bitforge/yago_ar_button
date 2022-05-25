@@ -80,20 +80,21 @@ export const styles = [
     }
 
     ar-modal {
+        display: flex;
         position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
         z-index: 9999;
-        -webkit-justify-content: center;
-        -moz-box-pack: center;
+        
         justify-content: center;
-        -webkit-align-items: center;
-        -moz-box-align: center;
         align-items: center;
-        background-color: rgba(0,0,0,.3);
+        background-color: rgba(0, 0, 0, 0.3);
         padding: 10px;
+
+        transition: .3s opacity ease;
+        opacity: 1;
     }
   `,
 ];

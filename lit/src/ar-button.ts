@@ -125,6 +125,10 @@ export class ArButton extends LitElement {
             return;
         }
 
+        console.log('TESTING LOG IS');
+        console.log(this.baseUrl);
+        
+
         this.config = await this.getConfig();
 
         this.checkDefaultVars();
