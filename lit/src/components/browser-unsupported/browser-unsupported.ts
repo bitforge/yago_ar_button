@@ -81,7 +81,6 @@ export class BrowserUnsupported extends LitElement {
             <div slot=header>
                 <div class="notsupported-modal-header">
                     <h2>${this.browserUnsupportedTitle}</h2>
-                    <button type="button" class="button-close" @click=${this.close}>✕</button>
                 </div>
             </div>
 
@@ -94,7 +93,7 @@ export class BrowserUnsupported extends LitElement {
                     <div class="clipboard-tooltip">
                         <span>${this._('clipboard_tooltip')}</span>
                     </div>
-                    <button class="copy-to-clipboard" @click=${this.copyUrl} class="${this.urlCopied ? 'copied' : ''}">
+                    <button class="copy-to-clipboard ${this.urlCopied ? 'copied' : ''}" @click=${this.copyUrl}>
                         <svg
                             id="copy-to-clipboard"
                             class="${this.urlCopied ? 'hidden' : ''}"
@@ -110,7 +109,7 @@ export class BrowserUnsupported extends LitElement {
                         </svg>
                         <svg
                             id="success"
-                            class="${this.urlCopied ? 'hidden' : ''}"
+                            class="${this.urlCopied ? '' : 'hidden'}"
                             xmlns="http://www.w3.org/2000/svg"
                             height="24px"
                             viewBox="0 0 24 24"

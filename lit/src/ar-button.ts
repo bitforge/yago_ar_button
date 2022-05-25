@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import Config from './interfaces/config';
 import { styles } from './styles';
@@ -80,6 +80,8 @@ export class ArButton extends LitElement {
         image: undefined,
     };
 
+    qrCodeAppended = false;
+
     render() { 
         return html`
         <div
@@ -104,10 +106,10 @@ export class ArButton extends LitElement {
                 class="${!this.showQrCode ? 'hidden' : ''}"
                 qrTitle="${this.templateQrTitle}"
                 qrText="${this.templateQrText}">
-                <h2 slot="header" class="ar-modal-content">${this.qrTitle}</h2> 
                 <div slot="default">
                     <div ${ref(this.qrCodeRef)} class="qr-element" style="background: ${this.templateProjectColor};" ></div>
                     <p class="ar-modal-content" style="{ width: ${this.qrSize}px }">
+                        <h2>${this.qrTitle}</h2> 
                         ${this.qrText}
                     </p>
                 </div>
@@ -117,18 +119,11 @@ export class ArButton extends LitElement {
         `;
     }
 
-    updated() {
+    protected async firstUpdated(): Promise<void> {
         if (!this.qrCodeRef.value) {
             console.error('QR Element is emtpy.');
             return;
         }
-
-        this.qrCode = new QRCodeStyling(this.qrOptions);
-        this.qrCode.append(this.qrCodeRef.value as HTMLElement);
-    }
-
-    async connectedCallback(): Promise<void> {
-        super.connectedCallback();
         
         this.config = await this.getConfig();
 
@@ -143,14 +138,23 @@ export class ArButton extends LitElement {
             if (this.isBrowserSupported) {
                 this.modelLink = new URL(this.config.quicklook_link);
             }
-            const link = this.arButtonRef as HTMLAnchorElement;
+            const link = this.arButtonRef.value as HTMLAnchorElement;
             link.addEventListener('message', this.onCallToActionButtonTapped);
         }
+
+
 
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.qrCodeRef.value as HTMLElement);
 
         this.showButton = true;
+    }
+
+
+    async connectedCallback(): Promise<void> {
+        super.connectedCallback();
+        
+       
     }
 
     checkDefaultVars(): void {
@@ -180,9 +184,6 @@ export class ArButton extends LitElement {
             } else {
                 this.templateQrText = this.qrText;
             }
-
-            console.log('testing');
-            console.log(this.arButtonRef);
 
             if (this.arButtonRef && this.arButtonRef.value) {
                 const arButtonElement: Element = this.arButtonRef.value;
@@ -294,10 +295,8 @@ export class ArButton extends LitElement {
     }
 
     renderQrCode(url: URL) {
-        console.log('rendering qr code');
-        
         this.qrOptions['data'] = url.toString();
-        //this.qrCode?.update(this.qrOptions);
+        this.qrCode?.update(this.qrOptions);
     }
     
     closeModalWindow(): void {
