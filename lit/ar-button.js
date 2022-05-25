@@ -40,7 +40,6 @@ export class ArButton extends LitElement {
 
     // Fetch config from yago server and update when ready
     this.config = await this.getConfig();
-    console.log(this.config)
 
     this.showButton = true;
   }
