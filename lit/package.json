@@ -18,7 +18,9 @@
     "watch": "parcel watch --target default",
 
     "build:prod": "parcel build --target default",
-    "build:dev": "NODE_ENV=development parcel build --target default"
+    "build:dev": "NODE_ENV=development parcel build --target default",
+
+    "deploy:dev": "gsutil rm -a gs://ar-button-dev/ar-button/** && gsutil cp -z js dist/*.js gs://ar-button-dev/ar-button/ && gsutil setmeta -h \"Cache-Control: no-store, no-cache\" gs://ar-button-dev/ar-button/*"
   },
   "author": "Bitforge AG",
   "license": "MIT",
