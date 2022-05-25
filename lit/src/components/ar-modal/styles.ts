@@ -6,7 +6,7 @@ export const styles = [
         display: none !important;
     }
 
-    .ar-button-modal .modal-inner {
+    .modal-inner {
         display: flex;
         flex-direction: column;
         border-radius: 1em;
@@ -17,13 +17,13 @@ export const styles = [
         max-width: 520px;*/
     }
 
-    .ar-button-modal .ar-modal-header {
+    .modal-inner .ar-modal-header {
         display: flex;
         justify-content: flex-end;
         padding: 15px;
     }
 
-    .ar-button-modal .button-close {
+    .modal-inner .button-close {
         border: none;
         font-size: 38px;
         cursor: pointer;
@@ -34,16 +34,16 @@ export const styles = [
         padding: 0;
     }
 
-    .ar-button-modal .button-close:focus {
+    .modal-inner .button-close:focus {
         outline: none;
     }
 
-    .ar-button-modal .ar-modal-body {
+    .modal-inner .ar-modal-body {
         position: relative;
         margin: 20px 60px;
     }
 
-    .ar-button-modal .ar-modal-footer {
+    .modal-inner .ar-modal-footer {
         color: #000000;
         border-top: 1px solid #888888;
         display: inline-flex;
@@ -52,24 +52,24 @@ export const styles = [
     }
 
     @media (-webkit-min-device-pixel-ratio: 2) {
-        .ar-button-modal .ar-modal-footer {
+        .modal-inner .ar-modal-footer {
             border-top: 0.5px solid #888888;
         }
     }
 
-    .ar-button-modal .ar-modal-footer a {
+    .modal-inner .ar-modal-footer a {
         color: inherit;
         text-decoration: none;
     }
 
-    .ar-button-modal .ar-modal-footer img {
+    .modal-inner .ar-modal-footer img {
         position: relative;
         top: 2px;
         margin: 0 4px;
         height: 16px;
     }
 
-    .ar-button-modal .ar-modal-footer p {
+    .modal-inner .ar-modal-footer p {
         font-family: var(--font-family, Avenir, Helvetica, Arial, sans-serif);
         font-size: 16px;
         margin: 0;

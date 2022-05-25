@@ -39,6 +39,10 @@ export class ArButton extends LitElement {
     projectColor = '';
     templateProjectColor: string = this.DEFAULT_PROJECTCOLOR;
 
+    @property()
+    qrSize = this.DEFAULT_QRSIZE
+    templateQrSize: number | null = null;
+
     baseUrl = process.env.YAGO_BASE_URL;
 
     modelLink: URL | null = null;
@@ -58,9 +62,6 @@ export class ArButton extends LitElement {
 
     @state()
     showBrowserHint = false;
-
-    @property()
-    qrSize = 300;
 
     qrCode: QRCodeStyling | null = null;
 
@@ -103,14 +104,12 @@ export class ArButton extends LitElement {
             
             <ar-modal
                 @modal-close=${this.closeModalWindow}
-                class="${!this.showQrCode ? 'hidden' : ''}"
-                qrTitle="${this.templateQrTitle}"
-                qrText="${this.templateQrText}">
-                <div slot="default">
+                class="${!this.showQrCode ? 'hidden' : ''}">
+                <div slot="default" style="width: ${this.qrSize}px">
                     <div ${ref(this.qrCodeRef)} class="qr-element" style="background: ${this.templateProjectColor};" ></div>
-                    <p class="ar-modal-content" style="{ width: ${this.qrSize}px }">
-                        <h2>${this.qrTitle}</h2> 
-                        ${this.qrText}
+                    <p class="ar-modal-content">
+                        <h2>${this.templateQrTitle}</h2> 
+                        ${this.templateQrText}
                     </p>
                 </div>
             </ar-modal>
@@ -124,10 +123,6 @@ export class ArButton extends LitElement {
             console.error('QR Element is emtpy.');
             return;
         }
-
-        console.log('TESTING LOG IS');
-        console.log(this.baseUrl);
-        
 
         this.config = await this.getConfig();
 

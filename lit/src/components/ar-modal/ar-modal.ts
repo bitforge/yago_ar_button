@@ -11,24 +11,22 @@ export class ArModal extends LitElement {
 
     render() {
         return html`
-            <div class="ar-button-modal ${this.modalClass}">
-                <div class="modal-inner" role="dialog">  
-                    <div class="ar-modal-header">
-                        <slot name="header"></slot>
-                        <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
-                    </div>
-                    <div class="ar-modal-body">
-                        <slot name="default"></slot>
-                    </div>
-                    <div class="ar-modal-footer">
-                        <p>
-                            Powered by
-                            <a href="https://yago.cloud/">
-                                Yago
-                                <img src="https://yago.cloud/static/yago/img/yago_icon.png" />
-                            </a>
-                        </p>
-                    </div>
+            <div class="modal-inner  ${this.modalClass}" role="dialog">  
+                <div class="ar-modal-header">
+                    <slot name="header"></slot>
+                    <button type="button" class="button-close" @click="${this.closeModalWindow}">✕</button>
+                </div>
+                <div class="ar-modal-body">
+                    <slot name="default"></slot>
+                </div>
+                <div class="ar-modal-footer">
+                    <p>
+                        Powered by
+                        <a href="https://yago.cloud/">
+                            Yago
+                            <img src="https://yago.cloud/static/yago/img/yago_icon.png" />
+                        </a>
+                    </p>
                 </div>
             </div>
         `;
