@@ -124,7 +124,7 @@ export class ArButton extends LitElement {
             console.error('QR Element is emtpy.');
             return;
         }
-        
+
         this.config = await this.getConfig();
 
         this.checkDefaultVars();
@@ -142,19 +142,10 @@ export class ArButton extends LitElement {
             link.addEventListener('message', this.onCallToActionButtonTapped);
         }
 
-
-
         this.qrCode = new QRCodeStyling(this.qrOptions);
         this.qrCode.append(this.qrCodeRef.value as HTMLElement);
 
         this.showButton = true;
-    }
-
-
-    async connectedCallback(): Promise<void> {
-        super.connectedCallback();
-        
-       
     }
 
     checkDefaultVars(): void {
