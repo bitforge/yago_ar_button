@@ -300,8 +300,6 @@ export class ArButton extends LitElement {
     }
 
     closeBrowserUnsupported(): void {
-        console.log('browserunsupported');
-        
         this.showBrowserHint = false;
     }
     
