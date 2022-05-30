@@ -206,5 +206,9 @@ export const styles = [
         visibility: hidden;
         opacity: 0;
     }
+
+    .ar-button-browser-unsupported .button-close {
+        height: 10px;
+    }
   `,
 ];

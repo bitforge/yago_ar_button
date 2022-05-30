@@ -113,7 +113,13 @@ export class ArButton extends LitElement {
                     </p>
                 </div>
             </ar-modal>
-            <browser-unsupported @modal-close=${this.closeBrowserUnsupported} class="${this.showBrowserHint ? '' : 'hidden'}" modelLink="${this.modelLink}" @modal-close="${this.showBrowserHint = false}"></browser-unsupported>
+
+            <browser-unsupported
+                @modal-close=${this.closeBrowserUnsupported}
+                class="${this.showBrowserHint ? '' : 'hidden'}"
+                modelLink="${this.modelLink}"
+                @modal-close="${this.showBrowserHint = false}">
+            </browser-unsupported>
         </div>
         `;
     }

@@ -127,8 +127,6 @@ export class BrowserUnsupported extends LitElement {
     }
 
     closeModalWindow(): void {
-        console.log('close modal window');
-
         const event = new CustomEvent('modal-close', { bubbles: true, });
         this.dispatchEvent(event); 
     }
