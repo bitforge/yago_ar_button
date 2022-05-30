@@ -125,6 +125,8 @@ export class ArButton extends LitElement {
     }
 
     protected async firstUpdated(): Promise<void> {
+        this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
+        
         if (!this.qrCodeRef.value) {
             console.error('QR Element is emtpy.');
             return;
@@ -133,8 +135,6 @@ export class ArButton extends LitElement {
         this.config = await this.getConfig();
 
         this.checkDefaultVars();
-
-        this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
 
         // On iOS: Change model link to open USDZ with AR Quicklook directly (Yago Redirect to USDZ model)
         if (this.isIos() && this.isQuicklookSupported() && this.config.quicklook_link) {
@@ -145,6 +145,21 @@ export class ArButton extends LitElement {
             }
             const link = this.arButtonRef.value as HTMLAnchorElement;
             link.addEventListener('message', this.onCallToActionButtonTapped);
+        }
+
+        if (this.isAndroid()) {
+            this.isArSupported = true;
+            this.modelLink = this.buildSceneviewerLink();
+        }
+
+         // Initialize QR code drawing style
+         if ('qr_config' in this.config) {
+            Object.assign(this.qrOptions, this.config.qr_config);
+
+            // Use higher error correction level when QR Code has image
+            if ('image' in this.qrOptions && this.qrOptions['image']) {
+                this.qrOptions['errorCorrectionLevel'] = 'H';
+            }
         }
 
         this.qrCode = new QRCodeStyling(this.qrOptions);
@@ -261,18 +276,26 @@ export class ArButton extends LitElement {
     }
 
     startAr(e: Event): void {
-        e.preventDefault();
+        console.log('starting AR');
 
+        console.log('BrowserSUpported: ', this.isBrowserSupported);
+        
         if (!this.isBrowserSupported) {
             e.preventDefault();
             this.showBrowserHint = true;
             return;
         }
 
+        console.log('ModelLInk: ', this.modelLink);
+
         if (!this.modelLink) {
+            e.preventDefault();
             console.error('ArButton: StartAr: ModelLink is empty.')
             return;
         }
+
+        console.log('ArSupported: ', this.isArSupported);
+
 
         // Show QR Code on devices without AR Support
         if (!this.isArSupported) {
@@ -288,6 +311,8 @@ export class ArButton extends LitElement {
         }
 
         // On AR supported devices just follow the link
+        console.log('following link i guess???');
+
     }
 
     renderQrCode(url: URL) {
@@ -301,6 +326,17 @@ export class ArButton extends LitElement {
 
     closeBrowserUnsupported(): void {
         this.showBrowserHint = false;
+    }
+
+    private buildSceneviewerLink(): URL {
+        // Pass current location as backlink. Will be shown as 'Visit' Link in SceneViewer
+        const pageUrl = new URL(window.location.toString());
+        if (!pageUrl.hash || pageUrl.hash.startsWith('#ar-button')) {
+            pageUrl.hash = '#' + this.elementId;
+        }
+        const encodedUrl = encodeURIComponent(pageUrl.toString());
+
+        return new URL(`/v/${this.model}/sceneviewer?page_url=${encodedUrl}`, this.baseUrl);
     }
     
     async getConfig(): Promise<Config> {
