@@ -34,10 +34,6 @@ export const styles = [
         padding: 0;
     }
 
-    .modal-inner .button-close:focus {
-        outline: none;
-    }
-
     .modal-inner .ar-modal-body {
         position: relative;
         margin: 20px 60px;
@@ -114,10 +110,6 @@ export const styles = [
         font-size: 16px;
         margin: 0;
         padding: 0 0 16px 0;
-    }
-
-    .ar-button-browser-unsupported .button-close {
-        display: none;
     }
 
     .ar-button-browser-unsupported header {

@@ -113,7 +113,7 @@ export class ArButton extends LitElement {
                     </p>
                 </div>
             </ar-modal>
-            <browser-unsupported class="${this.showBrowserHint ? '' : 'hidden'}" modelLink="${this.modelLink}" @modal-close="${this.showBrowserHint = false}"></browser-unsupported>
+            <browser-unsupported @modal-close=${this.closeBrowserUnsupported} class="${this.showBrowserHint ? '' : 'hidden'}" modelLink="${this.modelLink}" @modal-close="${this.showBrowserHint = false}"></browser-unsupported>
         </div>
         `;
     }
@@ -291,6 +291,12 @@ export class ArButton extends LitElement {
     
     closeModalWindow(): void {
         this.showQrCode = false;
+    }
+
+    closeBrowserUnsupported(): void {
+        console.log('browserunsupported');
+        
+        this.showBrowserHint = false;
     }
     
     async getConfig(): Promise<Config> {
