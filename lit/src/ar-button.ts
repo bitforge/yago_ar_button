@@ -126,7 +126,7 @@ export class ArButton extends LitElement {
 
     protected async firstUpdated(): Promise<void> {
         this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
-        
+
         if (!this.qrCodeRef.value) {
             console.error('QR Element is emtpy.');
             return;
@@ -276,26 +276,17 @@ export class ArButton extends LitElement {
     }
 
     startAr(e: Event): void {
-        console.log('starting AR');
-
-        console.log('BrowserSUpported: ', this.isBrowserSupported);
-        
         if (!this.isBrowserSupported) {
             e.preventDefault();
             this.showBrowserHint = true;
             return;
         }
 
-        console.log('ModelLInk: ', this.modelLink);
-
         if (!this.modelLink) {
             e.preventDefault();
             console.error('ArButton: StartAr: ModelLink is empty.')
             return;
         }
-
-        console.log('ArSupported: ', this.isArSupported);
-
 
         // Show QR Code on devices without AR Support
         if (!this.isArSupported) {
@@ -311,8 +302,6 @@ export class ArButton extends LitElement {
         }
 
         // On AR supported devices just follow the link
-        console.log('following link i guess???');
-
     }
 
     renderQrCode(url: URL) {
