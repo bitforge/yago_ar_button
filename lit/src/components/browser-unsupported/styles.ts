@@ -2,10 +2,6 @@ import { css } from 'lit';
 
 export const styles = [
   css`
-   .button-close {
-        display: none;
-    }
-
    header {
         padding: 0 15px;
     }

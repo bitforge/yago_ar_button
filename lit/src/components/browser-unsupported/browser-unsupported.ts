@@ -40,44 +40,9 @@ export class BrowserUnsupported extends LitElement {
 
     locale = 'en';
 
-    close() {
-        const event = new CustomEvent('modal-close', { bubbles: true, });
-        this.dispatchEvent(event);
-    }
-
-    initLocale() {
-        const browserLang = navigator.language.substring(0, 2);
-        const supportedLanguages = Object.keys(messages);
-        if (supportedLanguages.includes(browserLang)) {
-            this.locale = browserLang;
-        }
-    }
-
-    _(key: string): string {
-        return messages[this.locale][key] || key;
-    }
-
-    async copyUrl() {
-        try {
-            this.urlCopied = true;
-            await navigator.clipboard.writeText(this.modelLink.toString());
-            setTimeout(() => (this.urlCopied = false), 1000);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    
-    updated(): void {
-        this.initLocale();
-
-        this.browserUnsupportedTitle = this._('browser_unsupported_title');
-        this.browserUnsupportedBody = this._('browser_unsupported_body');
-    }
-
-
     render() {
         return html`
-        <ar-modal modalClass="ar-button-browser-unsupported">
+        <ar-modal modalClass="ar-button-browser-unsupported" @modal-close=${this.closeModalWindow}>
             <div slot=header>
                 <div class="notsupported-modal-header">
                     <h2>${this.browserUnsupportedTitle}</h2>
@@ -125,5 +90,46 @@ export class BrowserUnsupported extends LitElement {
             </div>
         </ar-modal>
         `;
+    }
+
+    close() {
+        const event = new CustomEvent('modal-close', { bubbles: true, });
+        this.dispatchEvent(event);
+    }
+
+    initLocale() {
+        const browserLang = navigator.language.substring(0, 2);
+        const supportedLanguages = Object.keys(messages);
+        if (supportedLanguages.includes(browserLang)) {
+            this.locale = browserLang;
+        }
+    }
+
+    _(key: string): string {
+        return messages[this.locale][key] || key;
+    }
+
+    async copyUrl() {
+        try {
+            this.urlCopied = true;
+            await navigator.clipboard.writeText(this.modelLink.toString());
+            setTimeout(() => (this.urlCopied = false), 1000);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
+    updated(): void {
+        this.initLocale();
+
+        this.browserUnsupportedTitle = this._('browser_unsupported_title');
+        this.browserUnsupportedBody = this._('browser_unsupported_body');
+    }
+
+    closeModalWindow(): void {
+        console.log('close modal window');
+
+        const event = new CustomEvent('modal-close', { bubbles: true, });
+        this.dispatchEvent(event); 
     }
 }
