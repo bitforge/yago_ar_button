@@ -63,15 +63,6 @@ export const styles = [
         text-align: center;
     }
 
-   .button-close {
-        border: none;
-        background: none;
-        position: absolute;
-        top: 20px;
-        right: 0;
-        font-size: 18px;
-    }
-
    .clipboard-tooltip {
         visibility: visible;
         width: 120px;
