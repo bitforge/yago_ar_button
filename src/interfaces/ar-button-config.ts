@@ -1,8 +1,8 @@
-import { MultiLanguageString } from './multilanguage-string';
+import LanguageObject from './language-object';
 
-export interface ArButtonConfig {
-    arButtonText: MultiLanguageString;
-    buttonTitle: MultiLanguageString;
-    popupText: MultiLanguageString;
+export default interface ArButtonConfig {
+    arButtonText: LanguageObject;
+    buttonTitle: LanguageObject;
+    popupText: LanguageObject;
     projectColor: string;
 }
