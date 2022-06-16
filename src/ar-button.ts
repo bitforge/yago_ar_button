@@ -301,6 +301,14 @@ export class ArButton extends LitElement {
     }
 
     startAr(e: Event): void {
+        const arClickEventPayload = {
+            modelId: this.model,
+            arButtonId: this.elementId,
+        };
+        
+        const arClickEvent = new CustomEvent('ar-button-click', { detail: arClickEventPayload });
+        document.dispatchEvent(arClickEvent);
+
         if (!this.isBrowserSupported) {
             e.preventDefault();
             this.showBrowserHint = true;
