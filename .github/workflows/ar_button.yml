@@ -19,4 +19,4 @@ jobs:
           yarn install --pure-lockfile
 
       - name: 🏗️ Build
-        run:  yarn build
+        run:  yarn build:dev
