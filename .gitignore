@@ -1,4 +1,4 @@
 dist/
 .parcel-cache/
 .DS_STORE
-node_modules
+node_modulesnode_modules/
