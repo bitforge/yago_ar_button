@@ -83,6 +83,31 @@ export class ArButton extends LitElement {
 
     qrCodeAppended = false;
 
+    static get observedAttributes() {return [ 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color' ]}
+
+    attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+        if (name == 'text')
+            this.buttonText = newValue;
+
+        if (name == 'qr-size') {
+            if (isNaN(newValue)) {
+                console.error('Yago Ar Button: Error: The QR Size must be a Number.');
+                this.qrSize = 300;
+            } else {
+                this.qrSize = Number(newValue);
+            }
+        }
+
+        if (name == 'qr-title')
+            this.qrTitle = newValue;
+
+        if (name == 'qr-text')
+            this.qrText = newValue;
+
+        if (name == 'project-color')
+            this.projectColor = newValue;
+      }
+
     render() { 
         return html`
         <div
