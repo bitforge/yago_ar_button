@@ -18,8 +18,5 @@ jobs:
           npm install yarn
           yarn install --pure-lockfile
 
-      - name: 👮 Code police
-        run: yarn lint --max-warnings=0
-
       - name: 🏗️ Build
         run:  yarn build
