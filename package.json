@@ -1,55 +1,42 @@
 {
-    "name": "@bitforgehq/yago-ar-button",
-    "version": "1.0.0",
-    "private": false,
-    "main": "dist/ar-button.umd.min.js",
-    "license": "MIT",
-    "homepage": "https://github.com/bitforge/genie-ar-button",
-    "sideEffects": false,
-    "scripts": {
-        "serve": "vue-cli-service serve",
-
-        "lint": "vue-cli-service lint",
-        "prettify": "npx prettier --write src",
-
-        "build": "yarn build:dev",
-        "deploy": "yarn deploy:dev",
-
-        "build:dev": "vue-cli-service build --mode dev --target wc --name ar-button src/components/ar-button.vue",
-        "deploy:dev": "gsutil rm -a gs://ar-button-dev/ar-button/** && gsutil cp -z js dist/*.js gs://ar-button-dev/ar-button/ && gsutil setmeta -h \"Cache-Control: no-store, no-cache\" gs://ar-button-dev/ar-button/*",
-
-        "build:prod": "vue-cli-service build  --mode prod --target wc --name ar-button src/components/ar-button.vue",
-        "deploy:prod": "gsutil rm -a gs://ar-button/ar-button/** && gsutil cp -z js dist/*.js gs://ar-button/ar-button/",
-
-        "build:npm": "vue-cli-service build --mode prod --target lib --name ar-button src/components/ar-button.vue"
-    },
-    "dependencies": {
-        "qr-code-styling": "1.5.0",
-        "vue": "^2.6.11",
-        "vue-class-component": "^7.2.3",
-        "vue-property-decorator": "^8.4.2"
-    },
-    "devDependencies": {
-        "@types/qrcode": "^1.3.5",
-        "@typescript-eslint/eslint-plugin": "^2.33.0",
-        "@typescript-eslint/parser": "^2.33.0",
-        "@vue/cli-plugin-babel": "~4.5.0",
-        "@vue/cli-plugin-eslint": "~4.5.0",
-        "@vue/cli-plugin-typescript": "~4.5.0",
-        "@vue/cli-service": "~4.5.0",
-        "@vue/eslint-config-typescript": "^5.0.2",
-        "eslint": "^6.7.2",
-        "eslint-plugin-import": "^2.20.2",
-        "eslint-plugin-vue": "^6.2.2",
-        "prettier": "^2.2.1",
-        "typescript": "~3.9.3",
-        "vue-template-compiler": "^2.6.11",
-        "webpack-bundle-analyzer": "^4.4.2"
-    },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "supports es6",
-        "not dead"
-    ]
+  "name": "ar-button",
+  "private": true,
+  "version": "0.0.1",
+  "description": "awd",
+  "source": "src/ar-button.ts",
+  "module": "dist/ar-button.js",
+  "types": "dist/types.d.ts",
+  "type": "module",
+  "targets": {
+    "default": {
+      "distDir": "./dist"
+    }
+  },
+  "scripts": {
+    "serve": "parcel ./index.html --port 8080 --target default",
+    "watch": "parcel watch --target default",
+    "build:dev": "NODE_ENV=development parcel build --target default",
+    "build:prod": "NODE_ENV=production parcel build --target default",
+    "deploy:dev": "gsutil rm -a gs://ar-button-dev/ar-button/** && gsutil cp -z js dist/*.js gs://ar-button-dev/ar-button/ && gsutil setmeta -h \"Cache-Control: no-store, no-cache\" gs://ar-button-dev/ar-button/*",
+    "deploy:prod": "gsutil rm -a gs://ar-button/ar-button/** && gsutil cp -z js dist/*.js gs://ar-button/ar-button/"
+  },
+  "author": "Bitforge AG",
+  "license": "MIT",
+  "dependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.5.0",
+    "@swc/helpers": "^0.3.13",
+    "@types/qrcode": "^1.4.2",
+    "eslint-plugin-lit": "^1.6.1",
+    "lit": "^2.1.0",
+    "qr-code-styling": "^1.6.0-rc.1",
+    "typescript": "^4.6.4",
+    "watch": "^1.0.2"
+  },
+  "devDependencies": {
+    "@parcel/transformer-typescript-types": "2.5.0",
+    "@webcomponents/webcomponentsjs": "^2.6.0",
+    "parcel": "^2.5.0",
+    "prettier": "^2.3.2"
+  },
+  "customElements": "custom-elements.json"
 }
