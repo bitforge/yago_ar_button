@@ -63,9 +63,6 @@ export class ArButton extends LitElement {
     @state()
     showBrowserHint = false;
 
-    @property()
-    testvalue = '';
-
     qrCode: QRCodeStyling | null = null;
 
     qrCodeRef = createRef();
