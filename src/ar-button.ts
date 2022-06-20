@@ -63,6 +63,9 @@ export class ArButton extends LitElement {
     @state()
     showBrowserHint = false;
 
+    @property()
+    testvalue = '';
+
     qrCode: QRCodeStyling | null = null;
 
     qrCodeRef = createRef();
@@ -83,9 +86,12 @@ export class ArButton extends LitElement {
 
     qrCodeAppended = false;
 
-    static get observedAttributes() {return [ 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color' ]}
+    static get observedAttributes() {return [ 'model', 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color' ]}
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+        if (name == 'model')
+            this.model = newValue;
+            
         if (name == 'text')
             this.buttonText = newValue;
 
@@ -150,7 +156,16 @@ export class ArButton extends LitElement {
     }
 
     protected async firstUpdated(): Promise<void> {
+        console.log('model is');
+        console.log(this.model);
+        console.log(this.testvalue);
+        
+        
         this.modelLink = new URL(`/v/${this.model}`, this.baseUrl);
+
+        console.log('asdf');
+        console.log(this.modelLink);
+        
 
         if (!this.qrCodeRef.value) {
             console.error('QR Element is emtpy.');
