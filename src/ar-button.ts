@@ -88,7 +88,7 @@ export class ArButton extends LitElement {
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         if (name == 'model')
             this.model = newValue;
-            
+
         if (name == 'text')
             this.buttonText = newValue;
 
@@ -111,10 +111,10 @@ export class ArButton extends LitElement {
             this.projectColor = newValue;
       }
 
-    render() { 
+    render() {
         return html`
         <div
-            id="${this.elementId}" 
+            id="${this.elementId}"
             class="ar-button ${!this.showButton ? 'hidden' : ''}">
 
             <a
@@ -129,14 +129,14 @@ export class ArButton extends LitElement {
                     <ar-icon></ar-icon>
                     ${this.templateButtonText}
             </a>
-            
+
             <ar-modal
                 @modal-close=${this.closeModalWindow}
                 class="${!this.showQrCode ? 'hidden' : ''}">
                 <div slot="default" style="width: ${this.qrSize}px">
                     <div ${ref(this.qrCodeRef)} class="qr-element" style="background: ${this.templateProjectColor};" ></div>
                     <p class="ar-modal-content">
-                        <h2>${this.templateQrTitle}</h2> 
+                        <h2>${this.templateQrTitle}</h2>
                         ${this.templateQrText}
                     </p>
                 </div>
@@ -165,14 +165,14 @@ export class ArButton extends LitElement {
         this.checkDefaultVars();
 
         // On iOS: Change model link to open USDZ with AR Quicklook directly (Yago Redirect to USDZ model)
-        if (this.isIos() && this.isQuicklookSupported() && this.config.quicklook_link) {
+        if (this.isIos() && this.config.quicklook_link) {
             this.isArSupported = true;
             this.isBrowserSupported = this.checkIosBrowserSupport();
             if (this.isBrowserSupported) {
                 this.modelLink = new URL(this.config.quicklook_link);
+                const link = this.arButtonRef.value as HTMLAnchorElement;
+                link.addEventListener('message', this.onCallToActionButtonTapped);
             }
-            const link = this.arButtonRef.value as HTMLAnchorElement;
-            link.addEventListener('message', this.onCallToActionButtonTapped);
         }
 
         if (this.isAndroid()) {
@@ -253,7 +253,7 @@ export class ArButton extends LitElement {
                 console.error('Model site_url must be defined when using callToAction.');
             }
         }
-    } 
+    }
 
     isIos(): boolean {
         return (
@@ -267,35 +267,17 @@ export class ArButton extends LitElement {
         return /android/i.test(navigator.userAgent);
     }
 
-    isQuicklookSupported(): boolean {
-        const link = this.arButtonRef.value as HTMLAnchorElement;
-        if (link) return link.relList.supports('ar');
-        return false;
-    }
-
     checkIosBrowserSupport(): boolean {
-        // On iOS, some WKWebView based browsers like Chrome and Firefox do support Quicklook links,
-        // while others like Brave, Opera or DuckDuckGo do not. They either offer to download the
-        // USDZ File or, worse, show it's plain content. It's hard to detect unsupported browsers
-        // since it can also be an embedded WebView in an App (e.g. LinkedIn In-App Browser).
-        // Therefore, if WKWebView is detected, we only allow browsers with known Quicklook support.
+        // Update September 2022: Apple broke SceneViewer feature detection in iOS16, yaaay!
+        // Use feature detection in Safari only and supported browser list on others
+        // Inspired from <model-viewer>:
+        // https://github.com/google/model-viewer/commit/f5da64faa1ecfa37d31ea9aa4d60c0241d2853f5
 
-        if (this.isWKWebView()) {
-            // https://chromium.googlesource.com/chromium/src/+/HEAD/docs/ios/user_agent.md
-            const isChrome = navigator.userAgent.includes('CriOS/');
-
-            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox#firefox_for_ios
-            const isFirefox = navigator.userAgent.includes('FxiOS/');
-
-            // https://blogs.windows.com/msedgedev/2017/10/05/microsoft-edge-ios-android-developer/
-            const isEdge = navigator.userAgent.includes('EdgiOS/');
-
-            // Only allow whitelisted browsers
-            return isChrome || isFirefox || isEdge;
+        if (!this.isWKWebView()) {
+            return this.featureDetectQuicklook();
+        } else {
+            return this.browserSupportsQuicklook();
         }
-
-        // All other browsers like Safari, SFSafariViewController and others are feature detected
-        return true;
     }
 
     isWKWebView(): boolean {
@@ -303,12 +285,38 @@ export class ArButton extends LitElement {
         return _window.webkit && _window.webkit.messageHandlers;
     }
 
+    featureDetectQuicklook(): boolean {
+        const link = this.arButtonRef.value as HTMLAnchorElement;
+        if (link) return link.relList.supports('ar');
+        return false;
+    }
+
+    browserSupportsQuicklook(): boolean {
+        // On iOS, some WKWebView based browsers like Chrome and Firefox do support Quicklook links,
+        // while others like Brave, Opera or DuckDuckGo do not. They either offer to download the
+        // USDZ File or, worse, show it's plain content. It's hard to detect unsupported browsers
+        // since it can also be an embedded WebView in an App (e.g. LinkedIn In-App Browser).
+        // Therefore, if WKWebView is detected, we only allow browsers with known Quicklook support.
+
+        // https://chromium.googlesource.com/chromium/src/+/HEAD/docs/ios/user_agent.md
+        const isChrome = navigator.userAgent.includes('CriOS/');
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox#firefox_for_ios
+        const isFirefox = navigator.userAgent.includes('FxiOS/');
+
+        // https://blogs.windows.com/msedgedev/2017/10/05/microsoft-edge-ios-android-developer/
+        const isEdge = navigator.userAgent.includes('EdgiOS/');
+
+        // Only allow whitelisted browsers
+        return isChrome || isFirefox || isEdge;
+    }
+
     startAr(e: Event): void {
         const arClickEventPayload = {
             modelId: this.model,
             arButtonId: this.elementId,
         };
-        
+
         const arClickEvent = new CustomEvent('ar-button-click', { detail: arClickEventPayload });
         document.dispatchEvent(arClickEvent);
 
@@ -344,7 +352,7 @@ export class ArButton extends LitElement {
         this.qrOptions['data'] = url.toString();
         this.qrCode?.update(this.qrOptions);
     }
-    
+
     closeModalWindow(): void {
         this.showQrCode = false;
     }
@@ -363,10 +371,10 @@ export class ArButton extends LitElement {
 
         return new URL(`/v/${this.model}/sceneviewer?page_url=${encodedUrl}`, this.baseUrl);
     }
-    
+
     async getConfig(): Promise<Config> {
         const url = `${this.baseUrl}/api/models/${this.model}/embed/options/`;
-        
+
         try {
             const configResponse = await fetch(url);
             if (!configResponse.ok) throw configResponse;
@@ -376,8 +384,8 @@ export class ArButton extends LitElement {
             return this.config;
         }
     }
-      
+
     get elementId(): string {
-        return 'ar-button-' + this.model; 
+        return 'ar-button-' + this.model;
     }
 }
