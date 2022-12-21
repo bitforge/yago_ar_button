@@ -34,6 +34,7 @@ export class ArModal extends LitElement {
 
     closeModalWindow(): void {
         const event = new CustomEvent('modal-close', { bubbles: true, });
+        document.dispatchEvent(event);
         this.dispatchEvent(event);
     }
 }
