@@ -13,6 +13,7 @@ import ArButtonConfig from './interfaces/ar-button-config';
 export class ArButton extends LitElement {
     static styles = styles;
 
+    DEFAULT_LANG = navigator.language;
     DEFAULT_TEXT = 'Place in your space';
     DEFAULT_QRTITLE = 'Here we go!';
     DEFAULT_QRTEXT = 'Scan the QR Code to place the model in your space.';
@@ -22,6 +23,10 @@ export class ArButton extends LitElement {
 
     @property()
     model = process.env.YAGO_MODEL;
+
+    @property()
+    lang = this.DEFAULT_LANG;
+
 
     @property()
     buttonText = this.DEFAULT_TEXT;
@@ -83,11 +88,14 @@ export class ArButton extends LitElement {
 
     qrCodeAppended = false;
 
-    static get observedAttributes() {return [ 'model', 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color' ]}
+    static get observedAttributes() {return [ 'model', 'lang', 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color' ]}
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         if (name == 'model')
             this.model = newValue;
+
+        if (name == 'lang')
+            this.lang = newValue;
 
         if (name == 'text')
             this.buttonText = newValue;
@@ -200,11 +208,11 @@ export class ArButton extends LitElement {
         if (this.config && this.config.ar_button_config) {
             const arButtonConfig: ArButtonConfig = this.config.ar_button_config as ArButtonConfig;
 
-            let userLang = navigator.language;
+            let userLang = this.lang;
             userLang = userLang.split('-')[0];
 
             const validLangs = ['en', 'de', 'fr', 'it'];
-            const chosenLang = validLangs.includes(userLang) ? userLang : 'en';
+            const chosenLang = validLangs.includes(userLang) ? userLang : validLangs.includes(navigator.language.split('-')[0]) ? navigator.language.split('-')[0] : 'en';
 
             if (this.buttonText == this.DEFAULT_TEXT) {
                 this.templateButtonText = arButtonConfig.arButtonText[chosenLang];
