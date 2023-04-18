@@ -20,6 +20,7 @@ Include the WebComponent in your Website where the button should appear.
 ```html
 <ar-button
     model="<yago-slug>"
+    lang="de"
     text="Place in your space"
     qr-size="300"
     qr-title="Here we go!"
@@ -31,6 +32,7 @@ Include the WebComponent in your Website where the button should appear.
 Property               |Type   |Description
 -----------------------|-------|---------------------------------------------------------------
 model                  |string |The slug (Short-URL) of your yago model. Usually 8 characters.
+lang                   |string |Preferred Language of Button when **no text** is given. Default is the browser language.
 text                   |string |Text in the AR Button. Default is 'Place in your space'.
 qr-size                |number |Size of the QR Code in the modal popup window.
 qr-title               |string |Title text in the modal popup window.
