@@ -41,8 +41,8 @@ export class ArButton extends LitElement {
     templateQrText = '';
 
     @property()
-    projectColor = '';
-    templateProjectColor: string = this.DEFAULT_PROJECTCOLOR;
+    projectColor = this.DEFAULT_PROJECTCOLOR;
+    templateProjectColor = '';
 
     @property()
     qrSize = this.DEFAULT_QRSIZE
