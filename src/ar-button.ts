@@ -117,6 +117,8 @@ export class ArButton extends LitElement {
 
         if (name == 'project-color')
             this.projectColor = newValue;
+
+        this.checkDefaultVars();
       }
 
     render() {
