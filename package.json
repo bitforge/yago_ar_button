@@ -17,8 +17,8 @@
     "watch": "parcel watch --target default",
     "build:dev": "rm -rf dist/* && NODE_ENV=development parcel build --target default",
     "build:prod": "rm -rf dist/* && NODE_ENV=production parcel build --target default && mv dist/ar-button.js dist/ar-button.min.js",
-    "deploy:dev": "gsutil rm -a gs://ar-button-dev/ar-button/** && gsutil cp -z js dist/ar-button.js gs://ar-button-dev/ar-button/ && gsutil setmeta -h \"Cache-Control: no-store, no-cache\" gs://ar-button-dev/ar-button/*",
-    "deploy:prod": "gsutil rm -a gs://ar-button/ar-button/** && gsutil cp -z js dist/ar-button.min.js gs://ar-button/ar-button/"
+    "deploy:dev": "gsutil rm -a gs://ar-button-dev/ar-button/** && gsutil cp -z js dist/* gs://ar-button-dev/ar-button/ && gsutil setmeta -h \"Cache-Control: no-store, no-cache\" gs://ar-button-dev/ar-button/*",
+    "deploy:prod": "gsutil rm -a gs://ar-button/ar-button/** && gsutil cp -z js dist/* gs://ar-button/ar-button/"
   },
   "author": "Bitforge AG",
   "license": "MIT",
