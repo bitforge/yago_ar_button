@@ -41,7 +41,10 @@ export class BrowserUnsupported extends LitElement {
     locale = 'en';
 
     render() {
-        return html`
+        if (this.isInAppWebView()) {
+            return html`<br /><span>${this.browserUnsupportedTitle}</span>`;
+        } else {
+            return html`
         <ar-modal modalClass="ar-button-browser-unsupported" @modal-close=${this.closeModalWindow}>
             <div slot=header>
                 <div class="notsupported-modal-header">
@@ -54,7 +57,7 @@ export class BrowserUnsupported extends LitElement {
                     ${this.browserUnsupportedBody}
                 </p>
                 <div class="copy-container">
-                    <input type="text" class="model-url" value="${this.modelLink }" onclick="this.select();" readonly />
+                    <input type="text" class="model-url" value="${this.modelLink}" onclick="this.select();" readonly />
                     <div class="clipboard-tooltip">
                         <span>${this._('clipboard_tooltip')}</span>
                     </div>
@@ -90,6 +93,7 @@ export class BrowserUnsupported extends LitElement {
             </div>
         </ar-modal>
         `;
+        }
     }
 
     close() {
@@ -118,7 +122,7 @@ export class BrowserUnsupported extends LitElement {
             console.error(error);
         }
     }
-    
+
     updated(): void {
         this.initLocale();
 
@@ -128,6 +132,25 @@ export class BrowserUnsupported extends LitElement {
 
     closeModalWindow(): void {
         const event = new CustomEvent('modal-close', { bubbles: true, });
-        this.dispatchEvent(event); 
+        this.dispatchEvent(event);
+    }
+
+    isInAppWebView() {
+        const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+
+        // Check if the device is iOS
+        const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
+
+        if (!isIOS) return false;
+
+        // Check if the user agent indicates WebView
+        const hasWebViewIndicators = /WebView/.test(userAgent) ||
+            (!/Safari/.test(userAgent) && isIOS);
+
+        // Detect absence of 'standalone' property (typical for in-app WebViews)
+        const lacksStandalone = typeof (window.navigator as any).standalone === 'undefined';
+
+        // Combine checks for maximum accuracy
+        return hasWebViewIndicators || lacksStandalone;
     }
 }
