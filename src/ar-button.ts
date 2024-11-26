@@ -205,7 +205,6 @@ export class ArButton extends LitElement {
 
         this.showButton = true;
 
-        console.log('ArButton: Initialized');
     }
 
     checkDefaultVars(): void {
