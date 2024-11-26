@@ -204,6 +204,8 @@ export class ArButton extends LitElement {
         this.qrCode.append(this.qrCodeRef.value as HTMLElement);
 
         this.showButton = true;
+
+        console.log('ArButton: Initialized');
     }
 
     checkDefaultVars(): void {
