@@ -309,6 +309,19 @@ export class ArButton extends LitElement {
         // since it can also be an embedded WebView in an App (e.g. LinkedIn In-App Browser).
         // Therefore, if WKWebView is detected, we only allow browsers with known Quicklook support.
 
+        // Native app wrappers that support QuickLook
+        const _window = window as any;
+        
+        // Capacitor (https://capacitorjs.com/)
+        const isCapacitor = _window.Capacitor !== undefined;
+        
+        // Cordova/PhoneGap
+        const isCordova = _window.cordova !== undefined;
+        
+        // Ionic (may use Capacitor or Cordova)
+        const isIonic = _window.Ionic !== undefined;
+
+        // Whitelisted iOS browsers that support QuickLook
         // https://chromium.googlesource.com/chromium/src/+/HEAD/docs/ios/user_agent.md
         const isChrome = navigator.userAgent.includes('CriOS/');
 
@@ -318,8 +331,8 @@ export class ArButton extends LitElement {
         // https://blogs.windows.com/msedgedev/2017/10/05/microsoft-edge-ios-android-developer/
         const isEdge = navigator.userAgent.includes('EdgiOS/');
 
-        // Only allow whitelisted browsers
-        return isChrome || isFirefox || isEdge;
+        // Allow whitelisted browsers and native app wrappers
+        return isChrome || isFirefox || isEdge || isCapacitor || isCordova || isIonic;
     }
 
     startAr(e: Event): void {
