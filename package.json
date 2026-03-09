@@ -23,7 +23,7 @@
   "author": "Bitforge AG",
   "license": "MIT",
   "dependencies": {
-    "@parcel/transformer-typescript-tsc": "^2.5.0",
+    "@parcel/transformer-typescript-tsc": "^2.16.4",
     "@swc/helpers": "^0.3.13",
     "@types/qrcode": "^1.4.2",
     "eslint-plugin-lit": "^1.6.1",
@@ -33,9 +33,9 @@
     "watch": "^1.0.2"
   },
   "devDependencies": {
-    "@parcel/transformer-typescript-types": "2.5.0",
+    "@parcel/transformer-typescript-types": "2.16.4",
     "@webcomponents/webcomponentsjs": "^2.6.0",
-    "parcel": "^2.5.0",
+    "parcel": "^2.16.4",
     "prettier": "^2.3.2"
   },
   "customElements": "custom-elements.json"
