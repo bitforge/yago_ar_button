@@ -16,6 +16,7 @@
     "serve": "parcel ./index.html --port 8080 --target default",
     "watch": "parcel watch --target default",
     "build:dev": "rm -rf dist/* && NODE_ENV=development parcel build --target default",
+    "test:smoke": "node test/smoke.mjs",
     "build:prod": "rm -rf dist/* && NODE_ENV=production parcel build --target default && mv dist/ar-button.js dist/ar-button.min.js",
     "deploy:dev": "yarn build:dev && rsync -avz dist/ loxanimo@bitforge.ch:www/dist.dev.yago.cloud/ar-button/",
     "deploy:prod": "yarn build:prod && rsync -avz --exclude='*.map' dist/ loxanimo@bitforge.ch:www/dist.yago.cloud/ar-button/"
@@ -37,6 +38,7 @@
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "buffer": "^6.0.3",
     "parcel": "^2.16.4",
+    "playwright": "^1.58.2",
     "prettier": "^3.8.1"
   },
   "customElements": "custom-elements.json"
