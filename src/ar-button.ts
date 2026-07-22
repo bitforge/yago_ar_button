@@ -88,7 +88,12 @@ export class ArButton extends LitElement {
 
     qrCodeAppended = false;
 
-    static get observedAttributes() {return [ 'model', 'lang', 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color' ]}
+    static get observedAttributes() {
+        // Must include super's list: that getter is what triggers Lit's
+        // finalize(), which builds elementStyles. Without it the component
+        // renders with no styles at all.
+        return [...super.observedAttributes, 'model', 'lang', 'text', 'qr-size', 'qr-title', 'qr-text', 'project-color'];
+    }
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         if (name == 'model')
