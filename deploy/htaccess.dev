@@ -1,0 +1,20 @@
+# Deployed into the ar-button/ directory by `yarn deploy:dev`.
+#
+# Apache merges this with the docroot .htaccess, which sets the CORS headers.
+# Only Cache-Control is set here, so the two never collide.
+#
+# The gsutil deploys used to set "no-store, no-cache" on dev. That was lost in
+# the move to rsync (Dec 2025), leaving responses with no Cache-Control at all,
+# so browsers fell back to heuristic caching and held the bundle for weeks.
+
+<IfModule mod_headers.c>
+    # Dev must never be cached: a redeploy has to be visible on reload.
+    <FilesMatch "^(ar-button(\.min)?\.js|version\.json)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate"
+    </FilesMatch>
+
+    # Content-addressed builds never change, so they can be cached forever.
+    <FilesMatch "^ar-button-.+\.js$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
