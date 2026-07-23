@@ -1,0 +1,19 @@
+# Deployed into the ar-button/ directory by `yarn deploy:prod`.
+#
+# Apache merges this with the docroot .htaccess, which sets the CORS headers.
+# Only Cache-Control is set here, so the two never collide.
+
+<IfModule mod_headers.c>
+    # Customers embed these filenames directly, so they can never be renamed or
+    # hashed. They must stay revalidating instead, or a redeploy takes weeks to
+    # reach browsers. Revalidation is cheap: ETag turns it into a 304.
+    <FilesMatch "^(ar-button(\.min)?\.js|version\.json)$">
+        Header set Cache-Control "public, max-age=300, must-revalidate"
+    </FilesMatch>
+
+    # Content-addressed builds never change, so they can be cached forever.
+    # Pin one of these if you need a build that cannot shift under you.
+    <FilesMatch "^ar-button-.+\.js$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
