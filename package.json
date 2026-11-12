@@ -30,8 +30,7 @@
     "eslint-plugin-lit": "^2.2.1",
     "lit": "^3.3.2",
     "qr-code-styling": "^1.9.2",
-    "typescript": "^5.9.3",
-    "watch": "^1.0.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@parcel/transformer-typescript-types": "2.16.4",
