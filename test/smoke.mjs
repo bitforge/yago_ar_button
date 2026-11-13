@@ -73,6 +73,42 @@ try {
     );
 
     console.log('✅ ar-button renders with its styles applied');
+
+    // qr-size must size the QR code itself, not only the popup around it.
+    // The QR options used to be built before attributes were applied, so the
+    // code always rendered at the default 276px whatever qr-size said.
+    for (const size of [200, 300, 500]) {
+        const qrPage = await browser.newPage();
+        // No model config: exercise the attribute without a project qr_config.
+        await qrPage.route('**/api/models/**', (route) => route.fulfill({ status: 404, body: '{}' }));
+        await qrPage.setContent(`<ar-button id="probe" qr-size="${size}"></ar-button>`);
+        await qrPage.addScriptTag({ path: BUNDLE });
+        await qrPage.waitForFunction(() => document.getElementById('probe')?.showButton, null, {
+            timeout: 30000,
+        });
+
+        // Desktop has no AR support, so activating the button opens the QR popup.
+        const qr = await qrPage.evaluate(async () => {
+            const el = document.getElementById('probe');
+            el.shadowRoot.querySelector('a.ar-link').click();
+            await el.updateComplete;
+            const svg = el.shadowRoot.querySelector('.qr-element svg');
+            return {
+                popupWidth: el.shadowRoot.querySelector('.qr-element').parentElement.style.width,
+                qrWidth: svg?.getAttribute('width'),
+                qrHeight: svg?.getAttribute('height'),
+            };
+        });
+        await qrPage.close();
+
+        console.log(`qr-size="${size}":`, qr);
+
+        assert.equal(qr.popupWidth, `${size}px`, 'QR popup is not sized from qr-size');
+        assert.equal(qr.qrWidth, String(size - 24), `QR code width ignores qr-size="${size}"`);
+        assert.equal(qr.qrHeight, String(size - 24), `QR code height ignores qr-size="${size}"`);
+    }
+
+    console.log('✅ qr-size sizes the QR code');
 } finally {
     await browser.close();
 }

@@ -195,6 +195,11 @@ export class ArButton extends LitElement {
             this.modelLink = this.buildSceneviewerLink();
         }
 
+         // Size the QR code from qr-size. qrOptions is built before attributes
+         // are applied, so its initial width/height always reflect the default.
+         this.qrOptions.width = this.qrSize - 24;
+         this.qrOptions.height = this.qrSize - 24;
+
          // Initialize QR code drawing style
          if ('qr_config' in this.config) {
             Object.assign(this.qrOptions, this.config.qr_config);
